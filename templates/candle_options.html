@@ -1,0 +1,941 @@
+<!--
+=========================================================
+* * Black Dashboard - v1.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/black-dashboard
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/dashboard/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/static/dashboard/assets/img/favicon.png">
+
+    <title>
+        Trading Crypto - {% block title %}{% endblock %} | AppSeed
+    </title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="/static/dashboard/assets/css/nucleo-icons.css" rel="stylesheet"/>
+    <!-- CSS Files -->
+    <link href="/static/dashboard/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet"/>
+    <link href="/static/dashboard/assets/css/theme-switcher.css" rel="stylesheet"/>
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="/static/dashboard/assets/demo/demo.css" rel="stylesheet"/>
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+      /* Default mobile styles */
+      .sidebar {
+        width: 230px;
+      }
+
+      .content {
+        margin-left: 0;
+
+      }
+
+      /* Hover effect for wider screens */
+      @media (min-width: 768px) {
+
+        .sidebar {
+          width: 69px;
+        }
+        
+        .content {
+          margin-left: -180px;
+          margin-right: 200px;
+        }
+
+        .sidebar:hover {
+          width: 230px;
+        }
+
+        .sidebar:hover + .main-panel .content {
+          margin-left: 0;
+        }
+
+      }
+      
+      /* Transitions */  
+      .sidebar {
+        transition: width 0.3s;
+      }
+
+      .content {
+        transition: margin-left 0.3s; 
+      }
+      #level_div {
+        display: none; 
+        position: absolute;
+        z-index: 100;
+        margin-top: -550px;
+        transition: opacity 0.3s ease; 
+        margin-left: 100px
+      }
+      .connect-button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 12px 24px;
+        cursor: pointer;
+
+        display: flex; 
+        align-items: center;
+      }
+
+      .connect-button i {
+        margin-right: 10px;
+      }
+    </style>
+    {% endblock stylesheets %}
+        
+</head>
+<body class="">
+
+    <div class="wrapper">
+
+        
+      <div class="sidebar">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+      -->
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="{% url 'home' %}" class="simple-text logo-mini">
+                  <i class="tim-icons icon-world"></i>
+                </a>
+                <a href="{% url 'home' %}" class="simple-text logo-normal">
+                    Home
+                </a>
+            </div>
+            <ul class="nav">
+                <li class="{% if 'index' in segment %} active {% endif %} ">
+                    <a href="#">
+                        <i class="tim-icons icon-chart-pie-36"></i>
+                        <p>My Trades</p>
+                    </a>
+                </li>
+                <li class="{% if 'icons' in segment %} active {% endif %}">
+                    <a href="#">
+                        <i class="tim-icons icon-credit-card"></i>
+                        <p>Copy Trading</p>
+                    </a>
+                </li>
+                <li class="{% if 'map' in segment %} active {% endif %}">
+                    <a href="{% url 'options' symbol=symbol account=account %}">
+                        <i class="tim-icons icon-wallet-43"></i>
+                        <p>Option Trading</p>
+                    </a>
+                </li>
+                <li class="{% if 'notifications' in segment %} active {% endif %}">
+                    <a href="{% url 'contest' %}">
+                        <i class="tim-icons icon-single-02"></i>
+                        <p>Trading Contest</p>
+                    </a>
+                </li>
+                <li class="{% if 'user' in segment %} active {% endif %}">
+                    <a href="#">
+                        <i class="tim-icons icon-bell-55"></i>
+                        <p>Market Analysis</p>
+                    </a>
+                </li>
+                <li class="{% if 'tables' in segment %} active {% endif %}">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="tim-icons icon-chart-bar-32"></i>
+                        <p>Trading Stats</p>
+                    </a>
+                </li>
+                <li class="{% if 'typography' in segment %} active {% endif %}">
+                    <a href="#">
+                        <i class="tim-icons icon-chart-bar-32"></i>
+                        <p>NFT Trading</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="tim-icons icon-chat-33"></i>
+                        <p>Support</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <i class="tim-icons icon-button-power"></i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+        <div class="main-panel flex">
+
+              <!-- Navbar -->
+              <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-toggle d-inline">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700" href="{% url 'home' %}" target="_blank">
+                          <img src="/static/img/logo.png" class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8" alt="main_logo" />
+                          <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"></span>
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="input-group d-flex align-items-center mb-0">
+                                <label class="switch theme-switch">
+                                    <input type="checkbox" class="bsc" checked="">
+                                    <span class="slider"></span>
+                                </label>
+                            </li>
+                            <li class="search-bar input-group">
+                                <button class="btn btn-link" id="search-button" data-toggle="modal"
+                                        data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
+                                    <span class="d-lg-none d-md-block">Search</span>
+                                </button>
+                            </li>
+                            <li >
+                              <div class="col-md" >
+                                <button class="connect-button">
+                                  <i class="tim-icons icon-wallet-43"></i>
+                                   Wallet
+                                </button>
+                                
+                              </div>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <div class="notification d-none d-lg-block d-xl-block"></div>
+                                    <i class="tim-icons icon-sound-wave"></i>
+                                    <p class="d-lg-none">
+                                        Notifications
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                                    <li class="nav-link"><a href="#" class="nav-item dropdown-item">Mike John responded to
+                                        your email</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">You
+                                        have 5 more tasks</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Your
+                                        friend Michael is in town</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
+                                        notification</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
+                                        one</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <div class="photo">
+                                        <img src="/static/dashboard/assets/img/anime3.png" alt="Profile Photo">
+                                    </div>
+                                    <b class="caret d-none d-lg-block d-xl-block"></b>
+                                    <p class="d-lg-none">
+                                        Log out
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li class="nav-link">
+                                        <a href="/user.html" class="nav-item dropdown-item">Profile</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li class="nav-link">
+                                        <a href="{% url 'login' %}" 
+                                          class="nav-item dropdown-item">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="separator d-lg-none"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Navbar -->
+      
+
+            {% block content %}
+
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-chart" >
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-sm-6 text-left" id="symbol_dropdowns">
+                                            <h5 class="card-category">Symbols</h5>
+                                            <h2 class="card-title">
+                                              {{symbol}}
+                                              <i class="tim-icons icon-minimal-down"></i>
+                                              
+                                            </h2>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                              {% if account == 'DEMO' %}
+                                                <label class="btn btn-sm btn-primary btn-simple active" id="demo-radio">
+                                              {% else %}
+                                                <label class="btn btn-sm btn-primary btn-simple" id="demo-radio">
+                                              {% endif %}
+                                                    <input type="radio" name="options" >
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Demo</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-single-02"></i>
+                                                    </span>
+                                                </label>
+                                                {% if account == 'LIVE' %}
+                                                <label class="btn btn-sm btn-primary btn-simple active" id="real-radio">
+                                                {% else %}
+                                                <label class="btn btn-sm btn-primary btn-simple" id="real-radio">
+                                                {% endif %}
+                                                    <input type="radio" class="d-none d-sm-none" name="options" >
+                                                  
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Real</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-gift-2"></i>
+                                                    </span>
+                                                </label>
+                                                <label class="btn btn-sm btn-primary btn-simple" id="wallet-radio">
+                                                    <input type="radio" class="d-none" name="options">
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Wallet</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-tap-02"></i>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 style="margin-left: 770px; margin-top: -30px; margin-bottom: -10px; color: rgb(1, 153, 1);">${{account_balance}}</h4>
+                                <div class="card-body">
+                                    <div class="chart-area" style="height: 75vh;">
+                                    <div id="chart">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            {% endblock content %}
+
+            <div class="sidebar float-right" style="margin-left: 1100px; width: 200px;">
+            <!--
+              Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+          -->
+            <div class="sidebar-wrapper">
+              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons" style="width: 97%;">
+                <label style="color: white;" class="buy-button btn btn-sm btn-primary btn-simple active" id="0" onclick="buyDirection('BUY')" >
+                    <input type="radio" name="options"  checked>
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Buy</span>
+                    <span class="d-block d-sm-none">
+                        <i class="tim-icons icon-single-02"></i>
+                    </span>
+                </label>
+                <label style="color: white;" class="sell-button btn btn-sm btn-primary btn-simple" id="1" onclick="sellDirection('SELL')">
+                    <input type="radio" class="d-none d-sm-none" name="options"  >
+                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sell</span>
+                    <span class="d-block d-sm-none">
+                        <i class="tim-icons icon-gift-2"></i>
+                    </span>
+                </label>
+
+            </div>
+                <ul class="nav">  
+                  <form id="trade-form" method="post" action="{% url 'place_crypto_trade' direction='BUY' account=account %}">
+                    {% csrf_token %}
+                    <li class="{% if 'icons' in segment %} active {% endif %}">
+                        <a>
+                          <label for="symbol">Symbol</label>
+                          <input id="symbol" name="symbol" type="text" value="{{symbol}}">
+                        </a>
+                    </li>
+                    
+                    <li class="{% if 'notifications' in segment %} active {% endif %}">
+                      <a>
+                        <label for="lot_size">Stake</label>
+                        <input id="lot_size" name="lot_size" type="number" placeholder="Stake">
+                      </a>
+                    </li>
+                    {% if 'pair' in request.resolver_match.url_name %}
+                    <li class="{% if 'notifications' in segment %} active {% endif %}" style="display: none;">
+                      <a>
+                        <label for="entry">Entry</label>
+                        <input id="entry" name="entry" type="number" value="{{pair_price}}">
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="{% if 'notifications' in segment %} active {% endif %}" style="display: none;">
+                      <a>
+                        <label for="entry">Entry</label>
+                        <input id="entry" name="entry" type="number" value="{{default_price}}">
+                      </a>
+                    </li>
+                    {% endif %}
+                    <li class="{% if 'user' in segment %} active {% endif %}">
+                      <a>
+                        <label for="leverage">Leverage</label>
+                        <input id="leverage" name="leverage" type="number" placeholder="1:100">
+                      </a>
+                    </li>
+                    <li class="{% if 'tables' in segment %} active {% endif %}">
+                      <a>
+                        <label for="take_profit">Take Profit</label>
+                        <input id="take_profit" name="take_profit" type="number" placeholder="Take Profit">
+                      </a>
+                    </li>
+                    <li class="{% if 'typography' in segment %} active {% endif %}">
+                      <a>
+                        <label for="stop_loss">Stop Loss</label>
+                        <input id="stop_loss" name="stop_loss" type="number" placeholder="Stop Loss">
+                      </a>
+                    </li>
+                    <div  class="col-md" style="width: 100%;">
+                      <button id="tradeBtn" type="submit" class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','right')">Buy</button>
+                    </div>
+                </form>
+                </ul>
+            </div>
+             
+            {% include 'dashboard/includes/footer.html' %}
+
+
+        </div>
+        
+
+        
+          
+        </div>  
+        <div class="col-md-6" id="level_div">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Crypto pairs </h4>
+            </div>
+            <div class="card-body ">
+              <div class="table-full-width table-responsive">
+                  <table class="table">
+                      <tbody>
+                        {%for currency_pair, price in forex_prices.items%}
+                        <tr>
+                          <td>
+                            <label class="form-check-label">
+                              <a href="{% url 'crypto_selected_pair' currency_pair=currency_pair.symbol account=account %}">
+                              <img style="height: 50px;" src="/static/assets/img/pairs/{{ currency_pair.image }}" alt="Beginner" class="form-check-img">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                              </a>
+                            </label>
+                          </td>
+                        
+                          <td>
+                            <p class="title">{{currency_pair}}</p>
+                            <p class="text-muted">{{price}}</p>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>  
+                  </table>
+              </div>
+          </div>
+
+    {% include 'dashboard/includes/fixed-plugin.html' %}
+
+    {% include 'dashboard/includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
+
+        });
+        // Get references to both elements
+        const symbolDiv = document.getElementById('symbol_dropdowns');
+        const levelDiv = document.getElementById('level_div');
+        
+        // Variable to track visibility state
+        let isLevelDivVisible = false;
+
+        // Function to toggle visibility
+        function toggleLevelDiv() {
+          if (isLevelDivVisible) {
+            levelDiv.style.display = 'none';
+          } else {
+            levelDiv.style.display = 'block';
+          }
+          
+          // Toggle the state
+          isLevelDivVisible = !isLevelDivVisible;
+        }
+
+        // Show/hide levelDiv on click
+        symbolDiv.addEventListener('click', toggleLevelDiv);
+        function buyDirection(direction) {
+          let url = "{% url 'place_crypto_trade' direction='BUY' account=account %}";
+          
+          document.getElementById("trade-form").action = url;
+          const btn = document.getElementById("tradeBtn");
+          btn.innerText = "Buy";
+        }
+        function sellDirection(direction) {
+          let url = "{% url 'place_crypto_trade' direction='SELL' account=account %}";
+          
+          document.getElementById("trade-form").action = url;
+          const btn = document.getElementById("tradeBtn");
+          btn.innerText = "Sell";
+        }
+        // Get radio buttons
+        const demoRadio = document.getElementById('demo-radio');
+        const realRadio = document.getElementById('real-radio');
+        // Handle click events  
+        demoRadio.addEventListener('click', () => {
+          window.location.href = "{% url 'crypto' symbol=symbol account='DEMO' %}"; 
+        });
+
+        realRadio.addEventListener('click', () => {
+          window.location.href = "{% url 'crypto' symbol=symbol account='LIVE' %}";
+        });
+    </script>
+    <script>
+      // Selectors
+      const form = $('#trade-form');
+      const buyBtn = $('.buy-button'); 
+      const sellBtn = $('.sell-button');
+  
+      const csrfToken = jQuery("[name=csrfmiddlewaretoken]").val();
+      // Target price to draw line at
+  
+      const chartData = {{ candle_data|safe }};
+      let strikePrice = chartData[chartData.length - 1].close;
+      let strikeTime = chartData[chartData.length - 1].time;
+      let strikeTimeMs = strikeTime * 1000;
+      const Markers = [];
+      const expiryTime = "2118-12-29";
+  
+      // Time range calculation
+      const calculateDataRange = (data) => {
+        return {
+          from: data[0].time / 1000,
+          to: data[data.length - 1].time / 1000
+        };
+      }
+  
+      const range = calculateDataRange(chartData);
+  
+      // Define the tickFormatter function
+      const tickMarkFormatter = (unix) => {
+        const date = new Date(unix * 1000);
+        return date.getHours() + ':00';
+      };
+      
+      const formatters = {
+        Dollar: function(price) { return '' + price.toFixed(5); },
+        Pound: function(price) { return '\u00A3' + price.toFixed(5); },
+      };
+      const formatterNames = Object.keys(formatters);
+  
+        document.addEventListener('DOMContentLoaded', function() {
+  
+          const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+              width: 820,
+              height: 700,
+              layout: {
+                backgroundColor: '#040426', // Dark blue background color for the chart area
+              },
+              timeScale: {
+              setAutoScale: false,
+              timeVisible: true,
+              secondsVisible: false,
+              ticksVisible: true, // Show ticks
+              rightOffset: 20, // Optional: Adjust the offset for better visibility
+              setVisibleLogicalRange: range,
+              setTimeUnit: 2,
+              setTickInterval: 60 * 60 * 1000,
+              setTickMarkFormatter: tickMarkFormatter, // Use the tickFormatter function
+                  },
+              rightPriceScale: {
+                priceFormatter: formatters,
+                scaleMargins: {
+                  top: 0.4, // leave some space for the legend
+                  bottom: 0.15,
+                },
+              },
+              crosshair: {
+                mode: LightweightCharts.CrosshairMode.Normal,
+                // hide the horizontal crosshair line
+                horzLine: {
+                  visible: false,
+                  labelVisible: false,
+                },
+              },
+              localization: {
+                priceFormatter: formatters[formatterNames[0]],
+              },
+        });
+        // Dark theme options
+        const darkTheme = {
+          chart: {
+            layout: {
+              background: {
+                type: 'solid',
+                color: '#2B2B43',
+              },
+              lineColor: '#2B2B43',
+              textColor: '#D9D9D9',
+            },
+            watermark: {
+              color: 'rgba(0, 0, 0, 0)',
+            },
+            crosshair: {
+              color: '#758696',
+            },
+            grid: {
+              vertLines: {
+                color: '#2B2B43',
+              },
+              horzLines: {
+                color: '#363C4E',
+              },
+            },
+          },
+          series: {
+              topColor: 'rgba(32, 226, 47, 0.56)',
+              bottomColor: 'rgba(32, 226, 47, 0.04)',
+              lineColor: 'rgba(32, 226, 47, 1)',
+          },
+        };
+        
+        chart.applyOptions({
+          priceScale: {
+            priceFormat: {
+            type: 'value',
+            precision: 4,
+            }
+          }
+        });
+  
+        const candleSeries = chart.addCandlestickSeries({
+          upColor: 'rgb(38,166,154)',
+          downColor: 'rgb(255,82,82)',
+          borderDownColor: 'rgb(255,82,82)',
+          borderUpColor: 'rgb(38,166,154)',
+          wickDownColor: 'rgb(255,82,82)',
+          wickUpColor: 'rgb(38,166,154)',
+        });
+        candleSeries.setData(chartData);
+        // Apply dark theme to chart 
+        // Apply dark theme to chart 
+        chart.applyOptions(darkTheme.chart);
+      
+        // Draw strike line
+        function drawStrikeLine(price) {
+
+          // Create line series
+          const targetLine = chart.addLineSeries({
+            color: 'lime',
+            lineWidth: 2,
+            lineStyle: LightweightCharts.LineStyle.Dashed,
+            price: price,
+          });
+  
+          // Set data points
+          targetLine.setData([
+            {time: chartData[0].time, close: price},
+            {time: chartData[chartData.length-1].time, close: price}
+          ]);
+        }
+        // Draw vertical line
+        function drawVerticalLine(time) {
+        const lineSeries = chart.addLineSeries({
+          color: 'blue',
+          lineWidth: 1,
+          lineStyle: LightweightCharts.LineStyle.Dashed,
+          title: 'Vertical Line'
+        });
+  
+        lineSeries.setData([
+          { time: time, close: 0 },
+          { time: time, close: 100 } // Adjust the value range as needed
+        ]);
+        }
+  
+        
+        // Handle form submit
+        buyBtn.click(function(e) {
+  
+          e.preventDefault();
+  
+          // Get form data
+          const data = {
+            symbol: form.find('#symbol').val(),
+            stake: form.find('#stake').val(),
+            expiration: form.find('#expiration').val(),
+            option_type: 'CALL'
+          };
+          
+          // AJAX request
+          $.ajax({
+            url: '/trade_options/CALL/',
+            method: 'POST', 
+            headers: {
+              'X-CSRFToken': csrfToken  // Set the CSRF token in the request headers
+            },
+            data: data,
+            success: function(res) {
+              drawStrikeLine(strikePrice, chart);
+  
+              Markers.push ({
+                time: strikeTime,
+                position: 'belowBar',
+                color: 'lime',
+                shape: 'arrowUp',
+                text: 'Call' 
+              })
+  
+              lineSeries.setMarkers(Markers);
+      
+              // After performing the buy action, update the trade list and balance
+                updateTradeListAndBalance();
+            }
+          });
+        });
+  
+        // Sell button handler
+        sellBtn.click(function(e) {
+  
+          e.preventDefault();
+  
+          // Get form data
+          const data = {
+            symbol: form.find('#symbol').val(),
+            stake: form.find('#stake').val(),
+            expiration: form.find('#expiration').val(),
+            option_type: 'PUT'
+          };
+  
+          // AJAX request
+          $.ajax({
+            url: '/trade_options/PUT/',
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': csrfToken  // Set the CSRF token in the request headers
+            },
+            data: data,
+            success: function(res) {
+              drawTargetLine(strikePrice, chart);
+              Markers.push ({
+                time: strikeTime,
+                position: 'aboveBar',
+                color: 'red',
+                shape: 'arrowDown',
+                text: 'Put'
+              });
+  
+              lineSeries.setMarkers(Markers);
+              // After performing the buy action, update the trade list and balance
+                updateTradeListAndBalance();
+            }
+          });
+        });
+          
+            // Function to fetch and update chart data
+            function fetchAndUpdateChartData() {
+              {% with symbol=symbol %}
+              fetch("{% url 'get_btc_historical_data' symbol=symbol %}")
+              {% endwith %}
+                  .then(response => response.json())
+                  .then(transformed_data => {
+                  if (transformed_data) {
+                      candleSeries.setData(transformed_data);
+          
+                      // Optionally, you can also update the price line
+                      chart.applyOptions({
+                      priceScale: {
+                          mode: 0, // Set the mode to 0 (numeric)
+                          invertScale: false,
+                      },
+                      });
+                      candleSeries.update(transformed_data);
+                      strikePrice = transformed_data[chartData.length - 1].close;
+                      strikeTime = transformed_data[chartData.length - 1].time;
+                  } else {
+                      console.error('Error fetching chart data');
+                  }
+              })
+              .catch(error => {
+                  console.error('Error fetching chart data:', error);
+              });
+          }
+        // Function to update the trade list and demo account balance
+        function updateTradeListAndBalance() {
+          $.ajax({
+            url: '/update_new_data/',
+            success: function (data) {
+              // Debugging: Print the data received from the server
+              console.log('Data received:', data);
+  
+              // Update balance
+              $('#demo-account-balance').text(data.demo_account_balance);
+  
+              // Clear existing trades
+              $('#trade-list').empty();
+  
+              data.trades.forEach(function (trade) {
+                console.log('Trade Data:', trade);
+                // Access and print the symbol
+                console.log('Trade Symbol:', trade.fields.symbol);
+  
+                const row = `
+                <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <table style="width: 100%;">
+                      <tr>
+                        <td id="trade-symbol" class="text-left font-sans text-sm font-semibold leading-normal">${trade.fields.symbol}</td>
+                        <td id="trade-type" style="color: green;" class="text-right font-sans text-sm font-semibold leading-normal">${trade.fields.option_type}</td>
+                      </tr>
+                      <tr>
+                        <td id="trade-stake" class="text-left font-bold">
+                          ${trade.fields.stake}
+                        </td>
+                        <td id="trade-exp" class="whitespace-nowrap px-4 py-2 text-gray-700">${trade.fields.expiration} mins</td>
+                      </tr>
+                      <tr>
+                        <td id="trade-symbol" class="text-left font-sans text-sm font-semibold leading-normal">Expire:</td>
+                        <td id="trade-type" style="color: red;" class="text-right font-sans text-sm font-semibold leading-normal">${formatCountdown(trade.fields.countdown)}</td>
+                      </tr>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              `;
+                $('#trade-list').append(row);
+              });
+              function formatCountdown(countdown) {
+                  // Extract the first 8 characters to display only the minutes and seconds
+                  return countdown.substring(0, 8);
+              }
+  
+              // Debugging: Print the updated trades
+              console.log('Updated trades:', $('#trade-list').html());
+            },
+            error: function (error) {
+              // Debugging: Print any errors
+              console.error('Error:', error);
+            },
+          });
+        }
+  
+        function drawTargetLine(price) {
+  
+          // Create line series
+          const targetLine = chart.addLineSeries({
+            color: 'red',
+            lineWidth: 1,
+            lineStyle: LightweightCharts.LineStyle.Dashed,
+            price: price,
+          });
+          // Set data points 
+          targetLine.setData([
+            {time: chartData[0].time, close: price},
+            {time: chartData[chartData.length-1].time, close: price}
+          ]);
+        }
+        // Function to update the countdown timer
+        function updateCountdownTimer(expirationTime) {
+            const countdownTimer = document.getElementById('countdown-timer');
+            const currentTime = new Date().getTime();
+            const timeRemaining = expirationTime - currentTime;
+  
+            // Check if the timer has reached zero
+            if (timeRemaining <= 0) {
+                // Trigger the AJAX request to update the trade icon and outcomes
+                $.ajax({
+                    url: '/update_trade_outcomes/',
+                    method: 'GET',  // Use GET or POST as appropriate
+                    success: function(res) {
+                        // Handle the response if needed
+                        console.log('Trade outcomes updated:', res);
+                    }
+                });
+  
+                // Hide the timer when it reaches zero
+                countdownTimer.style.display = 'none';
+            } else {
+                // Calculate minutes and seconds remaining
+                const minutes = Math.floor((timeRemaining % (20 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);	
+  
+                // Update the timer element
+                countdownTimer.innerHTML = `Time Remaining: ${minutes}m ${seconds}s`;
+            }
+        }
+        // Get the expiration time from your form or wherever it's available
+        const expirationTime = new Date(expiryTime).getTime();
+      
+        // Update the countdown timer every second (1000 milliseconds)
+        setInterval(function() {
+            updateCountdownTimer(expirationTime);
+            updateTradeListAndBalance();
+        }, 1000);
+            // Update chart data every 5 seconds
+            setInterval(fetchAndUpdateChartData, 2000); // Refresh every 2 seconds
+        });
+    </script>
+    {% endblock javascripts %}
+
+</body>
+</html>
+
+
+

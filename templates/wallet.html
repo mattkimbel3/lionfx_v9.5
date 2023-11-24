@@ -1,0 +1,89 @@
+{% extends "dashboard/layouts/base.html" %}
+
+{% block title %} Notifications {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card" style="margin-left: 35%;">
+          <div class="card-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="card-title">Bitcoin Wallet</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <h4 class="card-title">Balance: {{balance}}</h4>
+                    </div>
+                </div>
+            </div>
+            
+            
+          </div>
+          <div class="card-body all-icons" style="margin-left: 20%;">
+            <div class="row" >
+              <div class="font-icon-list col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                <div class="font-icon-detail" style="width: 300px;" >
+                  <img style="height: 220px; " class="meta-icon" viewBox="0 0 2405 2501" fill="none" xmlns="http://www.w3.org/2000/svg" src="https://th.bing.com/th/id/OIP.GtEo127m_vzHw4SOcz0B6gHaHa?rs=1&pid=ImgDetMain">
+                  <p><h5>Address: {{address}}</h5></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="places-buttons">
+              <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+                  <h4 class="card-title">
+                    Deposit History
+                  </h4>
+                </div>
+              </div>
+              <div class="row" style="display: none;">
+                <div class="col-lg-8 ml-auto mr-auto">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','left')">Bottom Left</button>
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','center')">Bottom Center</button>
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','right')">Bottom Right</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto">
+                  <div class="row">
+                    
+                    <div class="col-md-6 ml-auto mr-auto text-center">
+                      <p class="category">No Deposits Made. Send Some Bitcoin to your wallet address shown above. </p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

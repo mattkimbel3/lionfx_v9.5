@@ -1,0 +1,199 @@
+{% extends "dashboard/layouts/base.html" %}
+
+{% block title %} User Profile {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">Edit Profile</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" action="{% url 'trader_profile' account=account %}">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-5 pr-md-1">
+                  <div class="form-group">
+                    <label>Trader ID</label>
+                    <input type="text" class="form-control" disabled="" placeholder="Company" value="#{{profile.user_id}}">
+                  </div>
+                </div>
+
+                <div class="col-md-3 px-md-1">
+                  <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" disabled="" placeholder="Username" value="{{user.username}}">
+                  </div>
+                </div>
+                <div class="col-md-4 pl-md-1">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" disabled="" placeholder="mike@email.com" value="{{user.email}}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 pr-md-1">
+                  <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="Company" {% if profile.first_name %}value="{{ profile.first_name }}"{% endif %}>
+                  </div>
+                </div>
+                <div class="col-md-6 pl-md-1">
+                  <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="Last Name" {% if profile.first_name %}value="{{profile.last_name}}"{% endif %}>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <input id="address" name="address" type="text" class="form-control" placeholder="Home Address" {% if profile.address %}value="{{profile.address}}"{% endif %}>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 pr-md-1">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input id="city" name="city" type="text" class="form-control" placeholder="City" {% if profile.city %}value="{{profile.city}}"{% endif %}>
+                  </div>
+                </div>
+                <div class="col-md-4 px-md-1">
+                  <div class="form-group">
+                    <label for="country">Country</label>
+                    <input id="country" name="country" type="text" class="form-control" placeholder="Country" {% if profile.country %}value="{{profile.country}}"{% endif %}>
+                  </div>
+                </div>
+                <div class="col-md-4 pl-md-1">
+                  <div class="form-group">
+                    <label for="zip_code">Postal Code</label>
+                    <input name="zip_code" id="zip_code" type="number" class="form-control" placeholder="ZIP Code" {% if profile.zip_code %}value="{{profile.zip_code}}"{% endif %}>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 pr-md-1">
+                  <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input name="dob" id="dob" type="text" class="form-control" placeholder="YY/MM/DD" {% if profile.dob %}value="{{profile.dob}}"{% endif %}>
+                  </div>
+                </div>
+                <div class="col-md-4 px-md-1">
+                  <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <input id="gender" name="gender" type="text" class="form-control" placeholder="Gender" {% if profile.gender %}value="{{profile.gender}}"{% endif %}>
+                  </div>
+                </div>
+                <div class="col-md-4 pl-md-1">
+                  <div class="form-group">
+                    <label for="mobile_no">Mobile Number</label>
+                    <input id="mobile_no" name="mobile_no" type="number" class="form-control" placeholder="+1 3435 53532" {% if profile.mobile_no %}value="{{profile.mobile_no}}"{% endif %}>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="about">About Me</label>
+                    <textarea rows="4" cols="80" id="about" name="about" class="form-control" placeholder="Write a breif description about yourself">{% if profile.mobile_no %}{{profile.about}}.{% endif %}</textarea>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-fill btn-primary">Save</button>
+          </div>
+        </form>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-user">
+          <div class="card-body">
+            <p class="card-text">
+              <div class="author">
+                <div class="block block-one"></div>
+                <div class="block block-two"></div>
+                <div class="block block-three"></div>
+                <div class="block block-four"></div>
+                <a href="javascript:void(0)">
+                  <img class="avatar" src="/static/dashboard/assets/img/anime3.png" alt="...">
+                  {% if profile.first_name %}
+                  <h5 class="title">{{profile.first_name}} {{profile.last_name}}</h5>
+                  {% else %}
+                  <h5 class="title">{{user.username}}</h5>
+                  {% endif %}
+                </a>
+                <p class="description" style="display: inline-block; padding: 5px 10px; border: 2px solid orangered; color: white; border-radius: 8px; background-color: orangered;">
+                  Unverified
+                </p>
+              
+              
+              
+              </div>
+            </p>
+            <button class="verify-button">
+              <i class="tim-icons icon-upload"></i>
+               Fill In Personal Detials
+               <h5>Proceed to verification</h5>
+            </button>
+            <style>
+              .verify-button {
+                background-color: #b8b3b3; 
+                color: #fff;
+                
+                width: 100%;
+                font-size: 1.4em;
+                border-radius: 25px;
+                padding: 12px;
+
+                display: flex;
+                align-items: center; 
+              }
+
+              .verify-button i {
+                margin-right: 14px;
+                color: orangered;
+                size: 10em;
+                margin-right: 20px;  
+              }
+
+              .verify-button h5 {
+                margin-left: 10px;  
+                font-size: 15px;
+                color: orangered;
+                margin-top: 60px;
+                margin-left: -190px;
+              }
+            </style>
+          </div>
+          <div class="card-footer">
+            <div class="button-container">
+              <button href="javascript:void(0)" class="btn btn-icon btn-round btn-facebook">
+                <i class="fab fa-facebook"></i>
+              </button>
+              <button href="javascript:void(0)" class="btn btn-icon btn-round btn-twitter">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button href="javascript:void(0)" class="btn btn-icon btn-round btn-google">
+                <i class="fab fa-google-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

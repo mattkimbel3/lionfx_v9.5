@@ -1,0 +1,140 @@
+{% extends "dashboard/layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> Options Trades</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+            {% if closed_trades %}
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      Symbol
+                    </th>
+                    <th>
+                      Order
+                    </th>
+                    <th>
+                      Stake
+                    </th>
+                    <th class="text-center">
+                      Profits
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for closed_trade in closed_trades %}
+                  <tr>
+                    <td>
+                      {{closed_trade.symbol}}
+                    </td>
+                    <td>
+                      {{closed_trade.option_type}}
+                    </td>
+                    <td>
+                      {{closed_trade.stake}}
+                    </td>
+                    <td class="text-center">
+                      {{closed_trade.outcome}}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <div class="places-buttons">
+                <div class="row">
+                  <div class="col-md-6 ml-auto mr-auto text-center">
+                    <h4 class="card-title">
+                      No Option Trades on {{account}} account.
+                      <p class="category">Start Making <a href="{% url 'options' symbol='BTCUSD' account=account  %}">Option Trades</a> to view this section</p>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card  card-plain">
+          <div class="card-header">
+            <h4 class="card-title"> Margin Trades</h4>
+            <p class="category"> Here are history of margin trades.</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+            {% if margin_trades %}
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      Symbol
+                    </th>
+                    <th>
+                      Order
+                    </th>
+                    <th>
+                      Entry
+                    </th>
+                    <th class="text-center">
+                      Profit
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for margin_trade in margin_trades %}
+                  <tr>
+                    <td>
+                      {{margin_trade.symbol}}
+                    </td>
+                    <td>
+                      {{margin_trade.trade_direction}}
+                    </td>
+                    <td>
+                      {{margin_trade.entry}}
+                    </td>
+                    <td class="text-center">
+                      {{margin_trade.equity}}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <div class="places-buttons">
+                <div class="row">
+                  <div class="col-md-6 ml-auto mr-auto text-center">
+                    <h4 class="card-title">
+                      No Margin Trades on {{account}} account.
+                      <p class="category">Start Making <a href="{% url 'crypto' symbol='BTCUSD' account=account  %}">Margin Trades</a> to view this section</p>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

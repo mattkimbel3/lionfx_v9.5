@@ -1,0 +1,276 @@
+{% extends "dashboard/layouts/base.html" %}
+
+{% block title %} Notifications {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Payment Options</h4>
+          </div>
+          <div class="card-body all-icons">
+            <div class="row">
+              <table>
+                <tbody>
+                <tr>
+                  <td>
+                    <a href="{% url 'wallet' account='WALLET' %}">
+                    <div  class="font-icon-list col-lg-4 col-6 col-sm-4 col-xs-6">
+                      <div style="width: 180px;" class="font-icon-detail">
+                        <figure class="process-icon">
+                          <img src="/static/img/process-icons/2.png" alt="#">
+                        </figure>                        
+                        <p>Credit Bitcoin Wallet</p>
+                      </div>
+                    </div>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'deposit_eth' account='LIVE' %}">
+                    <div class="font-icon-list col-lg-4 col-6 col-sm-4 col-xs-6">
+                      <div class="font-icon-detail" style="width: 180px;">
+                        <figure class="process-icon" >
+                          <img style="height: 50px;" src="/static/assets/img/pairs/ether.png" alt="#">
+                        </figure>                        
+                        <p>Pay with Ethereum</p>
+                      </div>
+                    </div>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="{% url 'deposit_usdt' account='LIVE' %}">
+                    <div class="font-icon-list col-lg-4 col-6 col-sm-4 col-xs-6">
+                      <div class="font-icon-detail" style="width: 180px;">
+                        <figure class="process-icon" >
+                          <img style="height: 50px;" src="/static/assets/img/pairs/tether.png" alt="#">
+                        </figure>                        
+                        <p>Pay with Tether</p>
+                      </div>
+                    </div>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'deposit_usdc' account='LIVE' %}">
+                    <div class="font-icon-list col-lg-4 col-6 col-sm-4 col-xs-6">
+                      <div class="font-icon-detail" style="width: 180px;">
+                        <figure class="process-icon" >
+                          <img style="height: 50px;" src="/static/assets/img/pairs/USDC_Logo.png" alt="#">
+                        </figure>
+                        <p>Pay with USD Coin</p>
+                      </div>
+                    </div>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-left: 5%;">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Your Profile Level</h4>
+          </div>
+          <div class="card-body ">
+            <div class="table-full-width table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="title">Newbie</p>
+                            <p class="text-muted">No deposit Made</p>
+                        </td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="" class="btn btn-link"
+                                    data-original-title="Edit Task">
+                                <i class="tim-icons icon-minimal-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="title">Beginner</p>
+                            <p class="text-muted">Deposit Less Than $100 (10% deposit bonus)</p>
+                        </td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="" class="btn btn-link"
+                                    data-original-title="Edit Task">
+                                <i class="tim-icons icon-minimal-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="title">Enthusiast</p>
+                            <p class="text-muted">Min Deposit: $100 (20% deposit bonus)</p>
+                        </td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="" class="btn btn-link"
+                                    data-original-title="Edit Task">
+                                <i class="tim-icons icon-minimal-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="title">Experienced</p>
+                            <p class="text-muted">Min Deposit: $500 (35% deposit bonus)</p>
+                        </td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="" class="btn btn-link"
+                                    data-original-title="Edit Task">
+                                <i class="tim-icons icon-minimal-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="title">Pro</p>
+                            <p class="text-muted">Min Deposit: $1000 (50% deposit bonus)
+                                </p>
+                        </td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="" class="btn btn-link"
+                                    data-original-title="Edit Task">
+                                <i class="tim-icons icon-minimal-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-sign">
+                <span class="check"></span>
+                </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="title">Guru</p>
+                            <p class="text-muted">Min Deposit: $10000 (100% deposit bonus)</p>
+                        </td>
+                        <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="" class="btn btn-link"
+                                    data-original-title="Edit Task">
+                                <i class="tim-icons icon-minimal-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="places-buttons">
+              <div class="row">
+                <div class="col-md-6 ml-auto mr-auto text-center">
+                  <h4 class="card-title">
+                    Deposit History
+                  </h4>
+                </div>
+              </div>
+              <div class="row" style="display: none;">
+                <div class="col-lg-8 ml-auto mr-auto">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','left')">Bottom Left</button>
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','center')">Bottom Center</button>
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','right')">Bottom Right</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto">
+                  <div class="row">
+                    
+                    <div class="col-md-6 ml-auto mr-auto text-center">
+                      <p class="category">No Deposits Made.</p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

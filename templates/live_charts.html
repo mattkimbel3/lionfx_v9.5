@@ -1,0 +1,52 @@
+<!-- chart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart</title>
+    <!-- Include Lightweight Charts library -->
+    <script src="https://unpkg.com/lightweight-charts@3.0.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div id="chart"></div>
+
+    <!-- Your chart creation and initial data -->
+
+    <script>
+      // Create chart
+        const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+        width: 400, 
+        height: 300
+        });
+
+        // Add line series  
+        const line = chart.addLineSeries();
+        line.setData([{ time:'0', value: 0 }]);
+
+        // Generate random value
+        function getRandomValue() {
+        return Math.floor(Math.random() * 100); 
+        }
+
+        // Update chart periodically
+        setInterval(function() {
+
+        // Previous point
+        const lastPoint = line.data()[line.data().length - 1];
+        const lastTime = lastPoint.time + 1000;
+
+        // New random value
+        const value = getRandomValue();
+
+        // Append new point
+        line.update({
+            time: lastTime,
+            value: value
+        })
+
+        }, 1000);
+    </script>
+    
+</body>
+</html>

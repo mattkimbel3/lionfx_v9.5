@@ -1,0 +1,84 @@
+{% extends "dashboard/layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> Account Statements</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+            {% if transactions %}
+              <table class="table tablesorter " id="">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      Reference ID
+                    </th>
+                    <th>
+                      Date
+                    </th>
+                    <th>
+                      Description
+                    </th>
+                    <th class="text-center">
+                      Ammount
+                    </th>
+                    <th class="text-center">
+                        Balance
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for transaction in transactions %}
+                  <tr>
+                    <td>
+                      {{transaction.transaction_id}}
+                    </td>
+                    <td>
+                      {{transaction.date}}
+                    </td>
+                    <td>
+                      {{transaction.description}}
+                    </td>
+                    <td class="text-center">
+                      {{transaction.amount}}
+                    </td>
+                    <td class="text-center">
+                      {{transaction.balance}}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <div class="places-buttons">
+                <div class="row">
+                  <div class="col-md-6 ml-auto mr-auto text-center">
+                    <h4 class="card-title">
+                      No Account Statements on {{account}} account.
+                      <p class="category">Start Making <a href="{% url 'options' symbol='BTCUSD' account=account  %}"> Options</a> or <a href="{% url 'crypto' symbol='BTCUSD' account=account  %}">Margin Trades</a> to view account statments</p>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>      
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

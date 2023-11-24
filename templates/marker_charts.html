@@ -1,0 +1,1036 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Cryptocurrency - Landing Page Template</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Cryptocurrency Landing Page Template">
+	<meta name="keywords" content="cryptocurrency, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="/static/img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="/static/css/themify-icons.css"/>
+	<link rel="stylesheet" href="/static/css/animate.css"/>
+	<link rel="stylesheet" href="/static/css/owl.carousel.css"/>
+	<link rel="stylesheet" href="/static/css/style.css"/>
+	<link href="https://www.tradingview.com/assets/embed.embed.css" rel="stylesheet">
+
+
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<script src="https://unpkg.com/lightweight-charts@3.0.0/dist/lightweight-charts.standalone.production.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@3.0.0/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+      /* ... (existing styles) ... */
+      .right-side-container {
+        position: absolute;
+        top: 150px;
+        right: 50px;
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+
+      .input-group label {
+        margin-bottom: 5px;
+      }
+
+      .buttons {
+        display: flex;
+      }
+
+      /* ... (existing styles) ... */
+	  .star-checkbox {
+		display: inline-block;
+		cursor: pointer;
+		}
+
+		.star-icon {
+		width: 20px;
+		height: 20px;
+		fill: white;
+		stroke: blue;
+		stroke-width: 2;
+		transition: fill 0.2s ease;
+		}
+
+		.star-checkbox input[type="checkbox"] {
+		display: none;
+		}
+
+		.star-checkbox input[type="checkbox"]:checked + svg {
+		fill: blue;
+		}
+        #chart {
+          margin-top: 10px;
+          margin-left: 60px;
+        } 
+		/* ... (existing styles) ... */
+		.tradingview-widget-container {
+			margin-top: 85px;
+        }
+    </style>
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section clearfix">
+		<div class="container-fluid">
+			<a href="{% url 'home' %}" class="site-logo">
+				<img src="/static/img/logo.png" alt="">
+			</a>
+			{% if user.is_authenticated %}
+			<div class="responsive-bar">
+				<i class="fa fa-bars"></i>
+			</div>
+			<a href="" class="user">
+				<i class="fa fa-user"></i>
+			</a>
+			<a href="" class="site-btn" style="color: rgb(38, 38, 117);" >{{user.username}}</a>
+			<!-- Use Font Awesome's user icon -->
+			<!-- If the user is not authenticated, show sign up -->
+			{% else %}
+			<div class="responsive-bar">
+				<i class="fa fa-bars"></i>
+			</div>
+			<a href="" class="user">
+				<i class="fa fa-user"></i>
+			</a>
+			<a href="{% url 'sign_up' %}" style="color: rgb(38, 38, 117);" class="site-btn">Sign Up Free</a>
+			{% endif %}
+			<nav class="main-menu">
+				<ul class="menu-list">
+					<li><a style="color: rgb(38, 38, 117);" href="{% url 'trading' %}">Trading</a></li>
+					<li><a style="color: rgb(38, 38, 117);" href="{% url 'options' symbol='EURUSD' %}">Options</a></li>
+					<li><a style="color: rgb(38, 38, 117);" href="{% url 'candle_chart' symbol='BTCUSD' %}">Candle Chart</a></li>
+					<li><a style="color: rgb(38, 38, 117);" href="">About</a></li>
+					<li><a style="color: rgb(38, 38, 117);" href="">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<!-- Header section end -->
+	<!-- TradingView Widget BEGIN -->
+	<div class="tradingview-widget-container">
+		<div class="tradingview-widget-container__widget"></div>
+		<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+		{
+			"symbols": [
+			{
+				"proName": "FOREXCOM:NSXUSD",
+				"title": "US 100"
+			},
+			{
+				"proName": "FX_IDC:EURUSD",
+				"title": "EUR to USD"
+			},
+			{
+				"proName": "BITSTAMP:BTCUSD",
+				"title": "Bitcoin"
+			},
+            {
+				"proName": "BITSTAMP:ETHUSD",
+				"title": "Ethereum"
+			},
+			{
+				"description": "GBPUSD",
+				"proName": "FX:GBPUSD"
+			},
+			{
+				"description": "GBPJPY",
+				"proName": "FX:GBPJPY"
+			}
+			],
+			"showSymbolLogo": true,
+			"colorTheme": "light",
+			"isTransparent": false,
+			"displayMode": "adaptive",
+			"locale": "en"
+		}
+		</script>
+	</div>
+	<!-- TradingView Widget END -->
+
+
+	<div id="chart"></div>
+  
+
+  <!-- Right Side Container -->
+  <div class="right-side-container">
+    <h5>Demo Account: {{demo_account_balance}}</h5>
+    <p class="responsive" style="font-size: 30px; color: black;">Place Trades</p>
+	<form id="trade-form" method="post" action="{% url 'place_option_trade' option_type='PUT' %}">
+		{% csrf_token %}
+		<div class="inputs">
+		  <!-- Add this to your trading.html, where you want to display the symbol -->
+		  {% if 'pair' in request.resolver_match.url_name %}
+		  <div class="input-group">
+			<label for="symbol">Symbol:</label>
+			<input type="text" id="symbol" name="symbol" value="{{currency_pair}}">
+		  </div>
+		  {% else %}
+		  <div class="input-group">
+			<label for="symbol">Symbol:</label>
+			<input type="text" id="symbol" name="symbol" value="{{symbol}}">
+		  </div>
+	      {% endif %}
+		  
+		  <!-- Add this hidden input field inside your form to store the scraped symbol for submission -->
+		  <div class="input-group">
+			<label for="stake">Stake:</label>
+			<input type="number" id="stake" name="stake" placeholder="Enter Stake" required>
+		  </div>
+		  <div class="input-group">
+
+			<label for="expiration">Expiration:</label>
+		  
+			<select id="expiration" name="expiration">
+			  <option value="1">1 minute</option>
+			  <option value="2">2 minutes</option> 
+			  <option value="5">5 minutes</option>
+			  <option value="15">15 minutes</option>
+			  <option value="30">30 minutes</option>
+			</select>
+		  </div>
+		</div>
+		<div class="buttons">
+			<!-- Buy Button with SVG Arrow -->
+			<button style="color: blue;" class="buy-button" type="button">
+			  Call
+			  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-arrow-down" viewBox="0 0 16 16">
+				<path d="M10.854 8.854a.5.5 0 0 1-.708 0L8 7.207 5.854 9.354a.5.5 0 0 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708z" />
+			  </svg>
+			</button>
+		  
+			<!-- Sell Button with SVG Arrow -->
+			<button style="color: red;" class="sell-button" type="button">
+			  Put
+			  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-arrow-up" viewBox="0 0 16 16">
+				<path d="M10.854 8.354a.5.5 0 0 1 .146.708l-3 4a.5.5 0 0 1-.708 0l-3-4a.5.5 0 0 1 .708-.708L8 11.293l2.146-2.147a.5.5 0 0 1 .708 0z" />
+			  </svg>
+			</button>
+		</div>
+		  
+		<div id="option-trade-data" data-strike-price="" data-expire-time=""></div>
+	</form>
+	  
+  </div>
+	<!--
+  Heads up! 👋
+
+  This component comes with some `rtl` classes. Please remove them if they are not needed in your project.
+-->
+
+<div class="overflow-x-auto">
+	<table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+		<thead class="ltr:text-left rtl:text-right">
+		  <tr>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Symbol
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Price
+			</th>
+		</thead>
+	
+		<tbody class="divide-y divide-gray-200">
+		  {% for pair in pairs %}
+		  <tr>
+			<td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  {{pair.symbol}}
+			</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{pair.pair}}</td>
+			<td class="whitespace-nowrap px-4 py-2">
+			  <a
+				href="{% url 'candle_chart' symbol=pair.symbol %}"
+				class="col-lg-6 offset-lg-6 about-text"
+			  >
+				View
+			  </a>
+			</td>
+		  </tr>
+		  {% endfor %}
+		</tbody>
+	  </table>
+  </div>
+  <h2>My Trades</h2>
+  <div class="overflow-x-auto">
+	<table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+		<thead class="ltr:text-left rtl:text-right">
+		  <tr>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Symbol
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Strike Price
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Expiration
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Take Profit
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  P/L
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Time
+			</th>
+		</thead>
+	
+		<tbody class="divide-y divide-gray-200">
+		  {% for trade in trades %}
+		  <tr>
+			<td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  {{trade.symbol}}
+			</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{trade.strike_price}}</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">
+				<span id="countdown-timer"></span>
+			</td>			  
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{trade.option_type}}</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700" style="color:
+				{% if trade.closing_price < 0 %}
+					red;
+				{% elif trade.closing_price > 0 %}
+					green;
+				{% else %}
+					black;
+				{% endif %}">
+				{{ trade.closing_price|floatformat:2 }}
+			</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{trade.open_time}}</td>
+		  </tr>
+		  {% endfor %}
+		</tbody>
+	  </table>
+  </div>
+  <h2>Closed Trades</h2>
+  <div class="overflow-x-auto">
+	<table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+		<thead class="ltr:text-left rtl:text-right">
+		  <tr>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Symbol
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Strike Price
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+				Exit Price
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Expiration
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Take Profit
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Outcome
+			</th>
+			<th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  Time
+			</th>
+		</thead>
+	
+		<tbody class="divide-y divide-gray-200">
+		  {% for closed_trade in closed_trades %}
+		  <tr>
+			<td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+			  {{closed_trade.symbol}}
+			</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{closed_trade.strike_price}}</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{closed_trade.closing_price}}</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{closed_trade.expiration}} minute</td>			  
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{closed_trade.option_type}}</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700" style="color:
+				{% if closed_trade.outcome == 'lost' %}
+					red;
+				{% elif closed_trade.outcome == 'won' %}
+					green;
+				{% endif %}">
+				{{ closed_trade.outcome }}
+			</td>
+			<td class="whitespace-nowrap px-4 py-2 text-gray-700">{{closed_trade.open_time}}</td>
+		  </tr>
+		  {% endfor %}
+		</tbody>
+	  </table>
+  </div>
+  <!--
+  Heads up! 👋
+
+  This component comes with some `rtl` classes. Please remove them if they are not needed in your project.
+-->
+
+
+	<!-- About section -->
+	<section class="about-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 offset-lg-6 about-text">
+					<h2>What is Bitcoin</h2>
+					<h5>Bitcoin is an innovative payment network and a new kind of money.</h5>
+					<p>Bitcoin is one of the most important inventions in all of human history. For the first time ever, anyone can send or receive any amount of money with anyone else, anywhere on the planet, conveniently and without restriction. It’s the dawn of a better, more free world.</p>
+					<a href="" class="site-btn sb-gradients sbg-line mt-5">Get Started</a>
+				</div>
+			</div>
+			<div class="about-img">
+				<img src="/static/img/about-img.png" alt="">
+			</div>
+		</div>
+	</section>
+	<!-- About section end -->
+
+	<!-- Features section -->
+	<section class="features-section spad gradient-bg">
+		<div class="container text-white">
+			<div class="section-title text-center">
+				<h2>Our Features</h2>
+				<p>Bitcoin is the simplest way to exchange money at very low cost.</p>
+			</div>
+			<div class="row">
+				<!-- feature -->
+				<div class="col-md-6 col-lg-4 feature">
+					<i class="ti-mobile"></i>
+					<div class="feature-content">
+						<h4>Mobile Apps</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<a href="" class="readmore">Readmore</a>
+					</div>
+				</div>
+				<!-- feature -->
+				<div class="col-md-6 col-lg-4 feature">
+					<i class="ti-shield"></i>
+					<div class="feature-content">
+						<h4>Safe & Secure</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<a href="" class="readmore">Readmore</a>
+					</div>
+				</div>
+				<!-- feature -->
+				<div class="col-md-6 col-lg-4 feature">
+					<i class="ti-wallet"></i>
+					<div class="feature-content">
+						<h4>Wallet</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<a href="" class="readmore">Readmore</a>
+					</div>
+				</div>
+				<!-- feature -->
+				<div class="col-md-6 col-lg-4 feature">
+					<i class="ti-headphone-alt"></i>
+					<div class="feature-content">
+						<h4>Experts Support</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<a href="" class="readmore">Readmore</a>
+					</div>
+				</div>
+				<!-- feature -->
+				<div class="col-md-6 col-lg-4 feature">
+					<i class="ti-reload"></i>
+					<div class="feature-content">
+						<h4>Instant Exchange</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<a href="" class="readmore">Readmore</a>
+					</div>
+				</div>
+				<!-- feature -->
+				<div class="col-md-6 col-lg-4 feature">
+					<i class="ti-panel"></i>
+					<div class="feature-content">
+						<h4>Recuring Buys</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<a href="" class="readmore">Readmore</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Features section end -->
+
+	<!-- Process section -->
+	<section class="process-section spad">
+		<div class="container">
+			<div class="section-title text-center">
+				<h2>Get Started With Bitcoin</h2>
+				<p>Start learning about Bitcoin with interactive tutorials. It’s fun, easy, and takes only a few minutes! </p>
+			</div>
+			<div class="row">
+				<div class="col-md-4 process">
+					<div class="process-step">
+						<figure class="process-icon">
+							<img src="/static/img/process-icons/1.png" alt="#">
+						</figure>
+						<h4>Create Your Wallet</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+					</div>
+				</div>
+				<div class="col-md-4 process">
+					<div class="process-step">
+						<figure class="process-icon">
+							<img src="/static/img/process-icons/2.png" alt="#">
+						</figure>
+						<h4>Create Your Wallet</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+					</div>
+				</div>
+				<div class="col-md-4 process">
+					<div class="process-step">
+						<figure class="process-icon">
+							<img src="/static/img/process-icons/3.png" alt="#">
+						</figure>
+						<h4>Create Your Wallet</h4>
+						<p>Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Process section end -->
+
+	<!-- Fact section -->
+	<section class="fact-section gradient-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-md-6 col-lg-3">
+					<div class="fact">
+						<h2>60</h2>
+						<p>Support <br> Countries</p>
+						<i class="ti-basketball"></i>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-3">
+					<div class="fact">
+						<h2>12K</h2>
+						<p>Transactions  <br> per hour</p>
+						<i class="ti-panel"></i>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-3">
+					<div class="fact">
+						<h2>5B</h2>
+						<p>Largest <br> Transactions</p>
+						<i class="ti-stats-up"></i>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-3">
+					<div class="fact">
+						<h2>240</h2>
+						<p>Years <br> of Experience</p>
+						<i class="ti-user"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Fact section end -->
+
+	<!-- Team section -->
+	<section class="team-section spad">
+		<div class="container">
+			<div class="section-title text-center">
+				<h2>Meet Our Team</h2>
+				<p>Our experts in the field of crypto currency can always help you with any of your questions!</p>
+			</div>
+		</div>
+		<div class="team-members clearfix">
+			<!-- Team member -->
+			<div class="member">
+				<div class="member-text">
+					<div class="member-img set-bg" data-setbg="/static/img/member/1.jpg"></div>
+					<h2>Tom Binegar</h2>
+					<span>Business Development</span>
+				</div>
+				<div class="member-social">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-linkedin"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+				</div>
+				<div class="member-info">
+					<div class="member-img mf set-bg" data-setbg="/static/img/member/1.jpg"></div>
+					<div class="member-meta">
+						<h2>Tom Binegar</h2>
+						<span>Marketing Director</span>
+					</div>
+					<p>Jackson Nash is a full-time faculty member of the Marketing and Behavioural Science Division at the Sauder School of Business at UBC. He leads the Entrepreneurship Group, in the undergraduate and graduate programs, teaching actively in both of these.</p>
+				</div>
+			</div>
+			<!-- Team member -->
+			<div class="member">
+				<div class="member-text">
+					<div class="member-img set-bg" data-setbg="/static/img/member/2.jpg"></div>
+					<h2>Jackson Nash</h2>
+					<span>Business Development</span>
+				</div>
+				<div class="member-social">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-linkedin"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+				</div>
+				<div class="member-info">
+					<div class="member-img mf set-bg" data-setbg="/static/img/member/2.jpg"></div>
+					<div class="member-meta">
+						<h2>Jackson Nash</h2>
+						<span>Marketing Director</span>
+					</div>
+					<p>Jackson Nash is a full-time faculty member of the Marketing and Behavioural Science Division at the Sauder School of Business at UBC. He leads the Entrepreneurship Group, in the undergraduate and graduate programs, teaching actively in both of these.</p>
+				</div>
+			</div>
+			<!-- Team member -->
+			<div class="member">
+				<div class="member-text">
+					<div class="member-img set-bg" data-setbg="/static/img/member/3.jpg"></div>
+					<h2>Tom Binegar</h2>
+					<span>Business Development</span>
+				</div>
+				<div class="member-social">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-linkedin"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+				</div>
+				<div class="member-info">
+					<div class="member-img mf set-bg" data-setbg="/static/img/member/3.jpg"></div>
+					<div class="member-meta">
+						<h2>Aaron Ballance</h2>
+						<span>Ceo Bitcoin</span>
+					</div>
+					<p>Jackson Nash is a full-time faculty member of the Marketing and Behavioural Science Division at the Sauder School of Business at UBC. He leads the Entrepreneurship Group, in the undergraduate and graduate programs, teaching actively in both of these.</p>
+				</div>
+			</div>
+			<!-- Team member -->
+			<div class="member">
+				<div class="member-text">
+					<div class="member-img set-bg" data-setbg="/static/img/member/4.jpg"></div>
+					<h2>Melissa Barth</h2>
+					<span>Product Manager</span>
+				</div>
+				<div class="member-social">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-linkedin"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+				</div>
+				<div class="member-info">
+					<div class="member-img mf set-bg" data-setbg="/static/img/member/4.jpg"></div>
+					<div class="member-meta">
+						<h2>Melissa Barth</h2>
+						<span>Product Manager</span>
+					</div>
+					<p>Jackson Nash is a full-time faculty member of the Marketing and Behavioural Science Division at the Sauder School of Business at UBC. He leads the Entrepreneurship Group, in the undergraduate and graduate programs, teaching actively in both of these.</p>
+				</div>
+			</div>
+			<!-- Team member -->
+			<div class="member">
+				<div class="member-text">
+					<div class="member-img set-bg" data-setbg="/static/img/member/5.jpg"></div>
+					<h2>Katy Abrams</h2>
+					<span>Head of Design</span>
+				</div>
+				<div class="member-social">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-linkedin"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+				</div>
+				<div class="member-info">
+					<div class="member-img mf set-bg" data-setbg="/static/img/member/5.jpg"></div>
+					<div class="member-meta">
+						<h2>Katy Abrams</h2>
+						<span>Head of Design</span>
+					</div>
+					<p>Jackson Nash is a full-time faculty member of the Marketing and Behavioural Science Division at the Sauder School of Business at UBC. He leads the Entrepreneurship Group, in the undergraduate and graduate programs, teaching actively in both of these.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Team section -->
+
+
+	<!-- Review section -->
+	<section class="review-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 push-8">
+					<img src="/static/img/quote.png" alt="" class="quote mb-5">
+					<div class="review-text-slider owl-carousel">
+						<div class="review-text">
+							<p>"Bitcoin is exciting because it shows how cheap it can be. Bitcoin is better than currency in that you don’t have to be physically in the same place and, of course, for large transactions, currency can get pretty inconvenient.”</p>
+						</div>
+						<div class="review-text">
+							<p>"Bitcoin is exciting because it shows how cheap it can be. Bitcoin is better than currency in that you don’t have to be physically in the same place and, of course, for large transactions, currency can get pretty inconvenient.”</p>
+						</div>
+						<div class="review-text">
+							<p>"Bitcoin is exciting because it shows how cheap it can be. Bitcoin is better than currency in that you don’t have to be physically in the same place and, of course, for large transactions, currency can get pretty inconvenient.”</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 pr-0 pull-3">
+					<div class="review-meta-slider owl-carousel pt-5">
+						<div class="author-meta">
+							<div class="author-avatar set-bg" data-setbg="/static/img/review/1.jpg"></div>
+							<div class="author-name">
+								<h4>Aaron Ballance</h4>
+								<p>Ceo Bitcoin</p>
+							</div>
+						</div>
+						<div class="author-meta">
+							<div class="author-avatar set-bg" data-setbg="/static/img/review/2.jpg"></div>
+							<div class="author-name">
+								<h4>Jackson Nash</h4>
+								<p>Head of Design</p>
+							</div>
+						</div>
+						<div class="author-meta">
+							<div class="author-avatar set-bg" data-setbg="/static/img/review/3.jpg"></div>
+							<div class="author-name">
+								<h4>Katy Abrams</h4>
+								<p>Product Manager</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Review section end -->
+
+
+	<!-- Newsletter section -->
+	<section class="newsletter-section gradient-bg">
+		<div class="container text-white">
+			<div class="row">
+				<div class="col-lg-7 newsletter-text">
+					<h2>Subscribe to our Newsletter</h2>
+					<p>Sign up for our weekly industry updates, insider perspectives and in-depth market analysis.</p>
+				</div>
+				<div class="col-lg-5 col-md-8 offset-lg-0 offset-md-2">
+					<form class="newsletter-form">
+						<input type="text" placeholder="Enter your email">
+						<button>Get Started</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Newsletter section end -->
+
+
+
+	<!-- Blog section -->
+	<section class="blog-section spad">
+		<div class="container">
+			<div class="section-title text-center">
+				<h2>Latest News</h2>
+				<p>Bitcoin is the simplest way to exchange money at very low cost.</p>
+			</div>
+			<div class="row">
+				<!-- blog item -->
+				<div class="col-md-4">
+					<div class="blog-item">
+						<figure class="blog-thumb">
+							<img src="/static/img/blog/1.jpg" alt="">
+						</figure>
+						<div class="blog-text">
+							<div class="post-date">03 jan 2018</div>
+							<h4 class="blog-title"><a href="">Coinbase to Reopen the GDAX Bitcoin Cash-Euro Order Book</a></h4>
+							<div class="post-meta">
+								<a href=""><span>by</span> Admin</a>
+								<a href=""><i class="fa fa-heart-o"></i> 234 Likes</a>
+								<a href=""><i class="fa fa-comments-o"></i> 08 comments</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- blog item -->
+				<div class="col-md-4">
+					<div class="blog-item">
+						<figure class="blog-thumb">
+							<img src="/static/img/blog/2.jpg" alt="">
+						</figure>
+						<div class="blog-text">
+							<div class="post-date">28 dec 2018</div>
+							<h4 class="blog-title"><a href="">Blockchain Rolls Out Trading Feature for 22 States in the U.S</a></h4>
+							<div class="post-meta">
+								<a href=""><span>by</span> Admin</a>
+								<a href=""><i class="fa fa-heart-o"></i> 234 Likes</a>
+								<a href=""><i class="fa fa-comments-o"></i> 08 comments</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- blog item -->
+				<div class="col-md-4">
+					<div class="blog-item">
+						<figure class="blog-thumb">
+							<img src="/static/img/blog/3.jpg" alt="">
+						</figure>
+						<div class="blog-text">
+							<div class="post-date">28 aug 2018</div>
+							<h4 class="blog-title"><a href="">This Week in Bitcoin: Up, Down and Sideways</a></h4>
+							<div class="post-meta">
+								<a href=""><span>by</span> Admin</a>
+								<a href=""><i class="fa fa-heart-o"></i> 234 Likes</a>
+								<a href=""><i class="fa fa-comments-o"></i> 08 comments</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Blog section end -->
+
+
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<div class="row spad">
+				<div class="col-md-6 col-lg-3 footer-widget">
+					<img src="/static/img/logo.png" class="mb-4" alt="">
+					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est laborum.</p>
+					<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+				</div>
+				<div class="col-md-6 col-lg-2 offset-lg-1 footer-widget">
+					<h5 class="widget-title">Resources</h5>
+					<ul>
+						<li><a href="#">How to Buy Coin</a></li>
+						<li><a href="#">Coin Overview</a></li>
+						<li><a href="#">Blog News</a></li>
+						<li><a href="#">How to Sell Coin</a></li>
+						<li><a href="#">Purchase Theme</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 col-lg-2 offset-lg-1 footer-widget">
+					<h5 class="widget-title">Quick Links</h5>
+					<ul>
+						<li><a href="#">Network Stats</a></li>
+						<li><a href="#">Block Explorers</a></li>
+						<li><a href="#">Governance</a></li>
+						<li><a href="#">Exchange Markets</a></li>
+						<li><a href="#">Get Theme</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 col-lg-3 footer-widget pl-lg-5 pl-3">
+					<h5 class="widget-title">Follow Us</h5>
+					<div class="social">
+						<a href="" class="facebook"><i class="fa fa-facebook"></i></a>
+						<a href="" class="google"><i class="fa fa-google-plus"></i></a>
+						<a href="" class="instagram"><i class="fa fa-instagram"></i></a>
+						<a href="" class="twitter"><i class="fa fa-twitter"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<div class="row">
+					<div class="col-lg-4 store-links text-center text-lg-left pb-3 pb-lg-0">
+						<a href=""><img src="/static/img/appstore.png" alt="" class="mr-2"></a>
+						<a href=""><img src="/static/img/playstore.png" alt=""></a>
+					</div>
+					<div class="col-lg-8 text-center text-lg-right">
+						<ul class="footer-nav">
+							<li><a href="">DPA</a></li>
+							<li><a href="">Terms of Use</a></li>
+							<li><a href="">Privacy Policy </a></li>
+							<li><a href="">support@company.com</a></li>
+							<li><a href="">(123) 456-7890</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="/static/js/jquery-3.2.1.min.js"></script>
+	<script src="/static/js/owl.carousel.min.js"></script>
+	<script src="/static/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="https://www.tradingview.com/static/lightweight-charts.standalone.production.js"></script>
+
+
+  <!-- Place this script block at the end of your trading.html, before the closing </body> tag -->
+  <script>
+
+    
+    const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+        width: 600,
+        height: 300,
+            timeScale: {
+                    timeVisible: true,
+            borderColor: '#D1D4DC',
+                },
+        rightPriceScale: {
+            borderColor: '#D1D4DC',
+        },
+        layout: {
+            background: {
+                    type: 'solid',
+                    color: '#ffffff',
+                },
+            textColor: '#000',
+        },
+        grid: {
+            horzLines: {
+            color: '#F0F3FA',
+            },
+            vertLines: {
+            color: '#F0F3FA',
+            },
+        },
+    });
+
+    const series = chart.addCandlestickSeries({
+            upColor: 'rgb(38,166,154)',
+            downColor: 'rgb(255,82,82)',
+            wickUpColor: 'rgb(38,166,154)',
+            wickDownColor: 'rgb(255,82,82)',
+            borderVisible: false,
+    });
+    const data = [{ time: {year: 2018, month: 9, day: 22} , open: 29.630237296336794 , high: 35.36950035097501 , low: 26.21522501353531 , close: 30.734997177569916 },
+    { time: {year: 2018, month: 9, day: 23} , open: 32.267626500691215 , high: 34.452661663723774 , low: 26.096868360824704 , close: 29.573918833457004 },
+    { time: {year: 2018, month: 9, day: 24} , open: 27.33996760497746 , high: 35.8060364835531 , low: 27.33996760497746 , close: 33.06283432964511 },
+    { time: {year: 2018, month: 9, day: 25} , open: 31.1654368745013 , high: 31.97284477478497 , low: 26.766743287285593 , close: 27.364979322283386 },
+    { time: {year: 2018, month: 9, day: 26} , open: 29.5901452337888 , high: 32.147919593347474 , low: 27.53289219709677 , close: 29.202912415085272 },
+    { time: {year: 2018, month: 9, day: 27} , open: 27.561741523265923 , high: 35.11649043301526 , low: 25.20035866163233 , close: 31.14520649627546 },
+    { time: {year: 2018, month: 9, day: 28} , open: 31.925975006823798 , high: 31.925975006823798 , low: 28.998500720406675 , close: 29.87723790403876 },
+    { time: {year: 2018, month: 9, day: 29} , open: 30.826956088992475 , high: 34.79463130873015 , low: 25.291546123273097 , close: 28.994812708315987 },
+    { time: {year: 2018, month: 9, day: 30} , open: 31.202920145287838 , high: 33.19178819590413 , low: 23.94419012923956 , close: 31.47253745770869 },
+    { time: {year: 2018, month: 10, day: 1} , open: 26.927794164758666 , high: 34.6744456778885 , low: 26.927794164758666 , close: 31.091122539737423 },
+    { time: {year: 2018, month: 10, day: 2} , open: 26.452041173938298 , high: 34.527917622572154 , low: 26.452041173938298 , close: 27.65703395829094 },
+    { time: {year: 2018, month: 10, day: 3} , open: 27.74629982387605 , high: 29.300441707649835 , low: 23.761300216231263 , close: 29.182874625005628 },
+    { time: {year: 2018, month: 10, day: 4} , open: 30.41599722290526 , high: 31.942643078777103 , low: 27.09925359459428 , close: 30.918477883682872 },
+    { time: {year: 2018, month: 10, day: 5} , open: 25.76549797105683 , high: 33.4650523853759 , low: 25.76549797105683 , close: 28.15984801386293 },
+    { time: {year: 2018, month: 10, day: 6} , open: 27.543404135965382 , high: 30.7227783000902 , low: 25.749951838020884 , close: 29.150903848724184 },
+    { time: {year: 2018, month: 10, day: 7} , open: 29.34759861812077 , high: 31.08503530472835 , low: 23.395022079647823 , close: 25.00923131079722 },
+    { time: {year: 2018, month: 10, day: 8} , open: 27.00266154335036 , high: 29.51599687178633 , low: 23.46749249241176 , close: 28.702932483799707 },
+    { time: {year: 2018, month: 10, day: 9} , open: 25.569958099853594 , high: 27.669071502065417 , low: 25.569958099853594 , close: 25.626920473922613 },
+    { time: {year: 2018, month: 10, day: 10} , open: 24.886919828178304 , high: 27.167620185117006 , low: 23.71595991386752 , close: 23.71595991386752 },
+    { time: {year: 2018, month: 10, day: 11} , open: 26.14124249813686 , high: 29.5638477987916 , low: 20.82341105699825 , close: 25.563138238511257 },
+    { time: {year: 2018, month: 10, day: 12} , open: 22.26412127509447 , high: 27.637685003390743 , low: 20.838507431464958 , close: 22.450517792778047 },
+    { time: {year: 2018, month: 10, day: 13} , open: 25.75099239090953 , high: 28.12000626118839 , low: 21.929748303510852 , close: 22.63015682488669 },
+    { time: {year: 2018, month: 10, day: 14} , open: 25.428132591291497 , high: 25.999229490809693 , low: 22.266121337091555 , close: 23.51047528528147 },
+    { time: {year: 2018, month: 10, day: 15} , open: 25.07416967939059 , high: 25.50535192500713 , low: 21.96666570325133 , close: 21.96666570325133 },
+    { time: {year: 2018, month: 10, day: 16} , open: 24.957206161449307 , high: 26.679727314857256 , low: 20.196753994637245 , close: 21.523347810451863 },
+    { time: {year: 2018, month: 10, day: 17} , open: 23.705184745772733 , high: 26.754094837621004 , low: 18.724184302695104 , close: 20.160857555541725 },
+    { time: {year: 2018, month: 10, day: 18} , open: 21.95610851644136 , high: 22.914889536420105 , low: 19.567733140100472 , close: 22.914889536420105 },
+    { time: {year: 2018, month: 10, day: 19} , open: 23.216357873687972 , high: 25.44815512734246 , low: 19.54787451276509 , close: 20.76851802225937 },
+    { time: {year: 2018, month: 10, day: 20} , open: 19.6289025950405 , high: 24.290702755740412 , low: 19.041541929894358 , close: 22.48608548162324 },
+    { time: {year: 2018, month: 10, day: 21} , open: 23.599000037544915 , high: 26.839019853462844 , low: 20.884129956680898 , close: 22.01878871761756 },
+    { time: {year: 2018, month: 10, day: 22} , open: 24.618502768742008 , high: 28.00099352255492 , low: 23.061935629399088 , close: 23.061935629399088 },
+    { time: {year: 2018, month: 10, day: 23} , open: 23.840701995876866 , high: 28.494382608429564 , low: 23.840701995876866 , close: 25.321841131665526 },
+    { time: {year: 2018, month: 10, day: 24} , open: 27.764925733189372 , high: 31.05550601484776 , low: 22.810929726970702 , close: 30.02406259204889 },
+    { time: {year: 2018, month: 10, day: 25} , open: 29.703149280184604 , high: 34.0185175501095 , low: 26.82967654698301 , close: 32.06834171351323 },
+    { time: {year: 2018, month: 10, day: 26} , open: 29.0251492427822 , high: 36.89478162439007 , low: 28.3502671011196 , close: 32.822663125409356 },
+    { time: {year: 2018, month: 10, day: 27} , open: 35.040777462643284 , high: 35.12524316379231 , low: 26.805156020579663 , close: 34.23626219571325 },
+    { time: {year: 2018, month: 10, day: 28} , open: 31.21349419519032 , high: 35.73068910379853 , low: 31.064101813812698 , close: 34.75020857236565 },
+    { time: {year: 2018, month: 10, day: 29} , open: 32.34914826794689 , high: 42.381605482695505 , low: 30.176750284055878 , close: 39.24138147444552 },
+    { time: {year: 2018, month: 10, day: 30} , open: 38.84583808993371 , high: 41.75165839362154 , low: 33.37106955991806 , close: 35.93904098275507 },
+    { time: {year: 2018, month: 10, day: 31} , open: 37.070183005323564 , high: 44.84460203857022 , low: 35.23671284121251 , close: 36.329972003600034 },
+    { time: {year: 2018, month: 11, day: 1} , open: 43.31997309164893 , high: 48.43216497187469 , low: 38.30881963355285 , close: 41.554948540677586 },
+    { time: {year: 2018, month: 11, day: 2} , open: 41.33946811092929 , high: 46.65347243834853 , low: 37.472215586661335 , close: 39.26832265482503 },
+    { time: {year: 2018, month: 11, day: 3} , open: 44.76468593661226 , high: 44.76468593661226 , low: 40.039672147314235 , close: 43.42106786288436 },
+    { time: {year: 2018, month: 11, day: 4} , open: 49.13160326887013 , high: 49.13160326887013 , low: 40.93648693038296 , close: 42.17817698294767 },
+    { time: {year: 2018, month: 11, day: 5} , open: 50.46706012970579 , high: 54.38104598422352 , low: 38.159930155343616 , close: 47.5899156640143 },
+    { time: {year: 2018, month: 11, day: 6} , open: 48.25899506613569 , high: 48.25899506613569 , low: 45.63208604138365 , close: 45.63208604138365 },
+    { time: {year: 2018, month: 11, day: 7} , open: 52.45484210527629 , high: 57.55979771849961 , low: 45.23447676016779 , close: 46.01127464234881 },
+    { time: {year: 2018, month: 11, day: 8} , open: 53.228216675179624 , high: 54.07804814570622 , low: 40.61161433961706 , close: 47.689867390699014 },
+    { time: {year: 2018, month: 11, day: 9} , open: 46.193099316212816 , high: 56.190537353078824 , low: 45.01246323828753 , close: 49.14012661656766 },
+    { time: {year: 2018, month: 11, day: 10} , open: 50.409245396927986 , high: 52.3082002787041 , low: 41.764144138886394 , close: 52.3082002787041 },
+    { time: {year: 2018, month: 11, day: 11} , open: 48.58146178816203 , high: 52.653922195022126 , low: 47.34031788474959 , close: 47.34031788474959 },
+    { time: {year: 2018, month: 11, day: 12} , open: 46.80040325283692 , high: 56.709349494076804 , low: 45.81605691554122 , close: 45.81605691554122 },
+    { time: {year: 2018, month: 11, day: 13} , open: 46.042722425788355 , high: 58.476056411825695 , low: 46.042722425788355 , close: 51.2300776481609 },
+    { time: {year: 2018, month: 11, day: 14} , open: 53.909068487588385 , high: 60.240990154306715 , low: 45.230741063278664 , close: 51.34529637385427 },
+    { time: {year: 2018, month: 11, day: 15} , open: 53.739609857086606 , high: 53.739609857086606 , low: 44.38017019990068 , close: 47.595960698697894 },
+    { time: {year: 2018, month: 11, day: 16} , open: 52.52688238296145 , high: 60.9220040817774 , low: 44.27700764117003 , close: 55.27309771985698 },
+    { time: {year: 2018, month: 11, day: 17} , open: 54.46100795908005 , high: 57.57937841117058 , low: 49.50543170388487 , close: 49.50543170388487 },
+    { time: {year: 2018, month: 11, day: 18} , open: 51.12284024600029 , high: 57.646718858433026 , low: 48.73280269653226 , close: 51.35457902694444 },
+    { time: {year: 2018, month: 11, day: 19} , open: 53.536130807863266 , high: 53.536130807863266 , low: 51.29649965636722 , close: 52.99088526565045 },
+    { time: {year: 2018, month: 11, day: 20} , open: 50.92761950009885 , high: 57.70671943558014 , low: 46.45030483558741 , close: 52.229112575743066 },
+    { time: {year: 2018, month: 11, day: 21} , open: 49.30035068900293 , high: 58.67691694734525 , low: 44.63563165197862 , close: 58.67691694734525 },
+    { time: {year: 2018, month: 11, day: 22} , open: 54.230476484061036 , high: 59.03831193868438 , low: 50.77849134047791 , close: 59.03831193868438 },
+    { time: {year: 2018, month: 11, day: 23} , open: 57.282420985156854 , high: 60.4869735007396 , low: 44.14116488798797 , close: 57.93461310007337 },
+    { time: {year: 2018, month: 11, day: 24} , open: 54.86833150125539 , high: 64.25102812467448 , low: 52.36616043331222 , close: 52.36616043331222 },
+    { time: {year: 2018, month: 11, day: 25} , open: 51.689239380620386 , high: 64.29747922654688 , low: 50.71498529572432 , close: 60.518206306602394 },
+    { time: {year: 2018, month: 11, day: 26} , open: 55.74863310659164 , high: 60.816819055612584 , low: 46.11238607935206 , close: 59.23044859881929 },
+    { time: {year: 2018, month: 11, day: 27} , open: 52.57406222528308 , high: 64.2058753841427 , low: 48.163404012323305 , close: 60.593847809696896 },
+    { time: {year: 2018, month: 11, day: 28} , open: 57.50710740029724 , high: 60.12123058977347 , low: 49.61839271711267 , close: 53.29152711098895 },
+    { time: {year: 2018, month: 11, day: 29} , open: 57.33581828303538 , high: 58.92432332528284 , low: 53.27790061455899 , close: 57.02787118731709 },
+    { time: {year: 2018, month: 11, day: 30} , open: 57.527445314328595 , high: 67.63249690962569 , low: 49.603261485289146 , close: 54.589123556483656 },
+    { time: {year: 2018, month: 12, day: 1} , open: 59.98835793934424 , high: 65.51917884840141 , low: 52.32535994476165 , close: 62.127135611086565 },
+    { time: {year: 2018, month: 12, day: 2} , open: 52.509550731662536 , high: 58.49971806419494 , low: 52.509550731662536 , close: 54.759948868082255 },
+    { time: {year: 2018, month: 12, day: 3} , open: 58.08470541982317 , high: 62.74987556918568 , low: 47.85627992158991 , close: 58.690428071336406 },
+    { time: {year: 2018, month: 12, day: 4} , open: 58.28482939034761 , high: 69.16675825892361 , low: 57.41588944088662 , close: 57.74515245619454 },
+    { time: {year: 2018, month: 12, day: 5} , open: 60.004299871302464 , high: 65.82447121605708 , low: 53.13330527599658 , close: 57.64488004774012 },
+    { time: {year: 2018, month: 12, day: 6} , open: 61.92746155137417 , high: 64.36944842979646 , low: 49.470442234694225 , close: 59.94404434023895 },
+    { time: {year: 2018, month: 12, day: 7} , open: 63.72235832229121 , high: 66.33649390307095 , low: 49.91822946887207 , close: 63.56396375320479 },
+    { time: {year: 2018, month: 12, day: 8} , open: 56.64594047326664 , high: 65.3730920902599 , low: 52.604389283975664 , close: 60.71684658387917 },
+    { time: {year: 2018, month: 12, day: 9} , open: 58.89798885700999 , high: 68.04578543284373 , low: 58.89798885700999 , close: 63.36111469854223 },
+    { time: {year: 2018, month: 12, day: 10} , open: 58.869685789579826 , high: 70.99828637845869 , low: 52.36901833289119 , close: 63.15473262144694 },
+    { time: {year: 2018, month: 12, day: 11} , open: 57.61362492091653 , high: 66.41975632948531 , low: 50.827182111530895 , close: 61.770769489947064 },
+    { time: {year: 2018, month: 12, day: 12} , open: 57.869332957269656 , high: 66.28374056429257 , low: 57.05028878520954 , close: 63.87762958979595 },
+    { time: {year: 2018, month: 12, day: 13} , open: 68.14347595614306 , high: 73.46304446829079 , low: 50.83319311788897 , close: 66.9144140431443 },
+    { time: {year: 2018, month: 12, day: 14} , open: 56.95907344942102 , high: 68.81432823196859 , low: 56.95907344942102 , close: 60.69722290026252 },
+    { time: {year: 2018, month: 12, day: 15} , open: 69.14662166493828 , high: 69.14662166493828 , low: 58.59143795311565 , close: 66.25235616866007 },
+    { time: {year: 2018, month: 12, day: 16} , open: 64.0373004661208 , high: 72.91321850066319 , low: 52.079104978168345 , close: 65.92678310822487 },
+    { time: {year: 2018, month: 12, day: 17} , open: 68.81814300123497 , high: 69.51927964796873 , low: 62.70935477415118 , close: 65.64565364397754 },
+    { time: {year: 2018, month: 12, day: 18} , open: 63.47554821643351 , high: 73.6284398311906 , low: 58.996882824636856 , close: 58.996882824636856 },
+    { time: {year: 2018, month: 12, day: 19} , open: 69.97765183896102 , high: 69.97765183896102 , low: 58.73355952507237 , close: 58.73355952507237 },
+    { time: {year: 2018, month: 12, day: 20} , open: 63.22638756186111 , high: 65.67137242291682 , low: 59.9542779777421 , close: 61.20003065016431 },
+    { time: {year: 2018, month: 12, day: 21} , open: 59.690029086102506 , high: 78.08665559197297 , low: 54.862707942292275 , close: 70.58935191024504 },
+    { time: {year: 2018, month: 12, day: 22} , open: 66.29092355620301 , high: 71.82667261213395 , low: 65.28001993201676 , close: 71.82667261213395 },
+    { time: {year: 2018, month: 12, day: 23} , open: 60.92645998120027 , high: 74.21283998861118 , low: 57.331119016099116 , close: 60.36728842356329 },
+    { time: {year: 2018, month: 12, day: 24} , open: 60.211957192084036 , high: 72.37883919241614 , low: 60.211957192084036 , close: 72.37883919241614 },
+    { time: {year: 2018, month: 12, day: 25} , open: 64.80282266865653 , high: 71.00204457933133 , low: 54.58446926152339 , close: 69.9468262738086 },
+    { time: {year: 2018, month: 12, day: 26} , open: 66.28091239894763 , high: 81.00843300529249 , low: 54.56212171317677 , close: 69.58528111643206 },
+    { time: {year: 2018, month: 12, day: 27} , open: 66.38479296949795 , high: 79.97207476893692 , low: 59.738742243860464 , close: 73.77893045661807 },
+    { time: {year: 2018, month: 12, day: 28} , open: 73.80105714462456 , high: 73.80105714462456 , low: 59.95172576316864 , close: 73.49823170047799 },
+    { time: {year: 2018, month: 12, day: 29} , open: 75.65816205696441 , high: 75.65816205696441 , low: 63.710206287837266 , close: 63.710206287837266 },
+    { time: {year: 2018, month: 12, day: 30} , open: 70.43199072631421 , high: 80.48229715762909 , low: 62.65542750589909 , close: 63.42588929424237 },
+    { time: {year: 2018, month: 12, day: 31} , open: 74.18101512382138 , high: 79.0918171034821 , low: 57.80109358134577 , close: 72.91361896511863 }];
+    series.setData(data);
+
+    const timestamps = data.map(d => {
+    return new Date(d.time.year, d.time.month-1, d.time.day).getTime(); 
+    });
+
+    const markerTimes = [
+    timestamps[timestamps.length - 39],
+    timestamps[timestamps.length - 19] 
+    ];
+
+    const markers = [
+    { time: markerTimes[0], position: 'inBar', /*...*/ },
+    { time: markerTimes[1], position: 'inBar', /*...*/ }
+    ];
+
+    series.setMarkers(markers);
+  </script>
+  
+</body>
+</html>
+

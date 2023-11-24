@@ -1,0 +1,1152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+	<meta name="description" content="Option Trading">
+	<meta name="keywords" content="cryptocurrency, options, trading">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/dashboard/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/static/dashboard/assets/img/favicon.png">
+
+    <title>
+        Trading Crypto - {% block title %}{% endblock %} | AppSeed
+    </title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="/static/dashboard/assets/css/nucleo-icons.css" rel="stylesheet"/>
+    <!-- CSS Files -->
+    <link href="/static/dashboard/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet"/>
+    <link href="/static/dashboard/assets/css/theme-switcher.css" rel="stylesheet"/>
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="/static/dashboard/assets/demo/demo.css" rel="stylesheet"/>
+
+    <script src="https://unpkg.com/lightweight-charts@3.0.0/dist/lightweight-charts.standalone.production.js"></script>
+    
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+      /* Default mobile styles */
+      .sidebar {
+        width: 230px;
+      }
+
+      .content {
+        margin-left: 0;
+
+      }
+
+      /* Hover effect for wider screens */
+      @media (min-width: 768px) {
+
+        .sidebar {
+          width: 69px;
+        }
+        
+        .content {
+          margin-left: -180px;
+          margin-right: 200px;
+        }
+
+        .sidebar:hover {
+          width: 230px;
+        }
+
+        .sidebar:hover + .main-panel .content {
+          margin-left: 0;
+        }
+
+      }
+      
+      /* Transitions */  
+      .sidebar {
+        transition: width 0.3s;
+      }
+
+      .content {
+        transition: margin-left 0.3s; 
+      }
+      #mySidenav {
+        position: fixed;
+        right: 0; 
+        /* other styles */
+      }
+      #level_div {
+        display: none; 
+        position: absolute;
+        z-index: 100;
+        margin-top: -550px;
+        transition: opacity 0.3s ease; 
+        margin-left: 100px
+      }
+      .connect-button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 12px 14px;
+        cursor: pointer;
+
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .connect-button i {
+        margin-right: 10px;
+      }
+
+      .connect-button h5 {
+        margin-top: 12%;
+        margin-bottom: -5%;
+        margin-left: -30%;
+      }
+    </style>
+    <style>
+      
+      
+      /* Button styling */
+
+      .buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .call-btn,
+    .put-btn {
+      align-items: center;
+      justify-content: center;
+      border-radius: 10%;
+      padding: 10px 25px;
+      height: 50px;
+      width: 130px;
+      transition: transform 0.2s; 
+    }
+
+    .call-btn:hover, 
+    .put-btn:hover {
+      transform: scale(1.05);
+    }
+
+    h3 {
+      margin: 10px 0;
+      color: #00a716;
+      font-weight: bold; 
+    }
+      
+    .curved-container {
+      background: linear-gradient(to right, green, gold);
+      border-radius: 30px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center; 
+    }
+
+    .fas.fa-gift {
+      color: #fff;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    .text {
+      color: #fff;
+    }
+
+    .top-text {
+      font-weight: bold;
+    }
+
+    .bottom-text {
+      font-size: 14px;
+    }
+    
+    .scrollable-container {
+      height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+  {% endblock stylesheets %}
+        
+</head>
+<body class="">
+
+    <div class="wrapper">
+
+        
+      <div class="sidebar">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+      -->
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="{% url 'home' %}" class="simple-text logo-mini">
+                  <i class="tim-icons icon-world"></i>
+                </a>
+                <a href="{% url 'home' %}" class="simple-text logo-normal">
+                    Home
+                </a>
+            </div>
+            <ul class="nav">
+                <li class="{% if 'index' in segment %} active {% endif %} ">
+                    <a href="{% url 'all_trades' account=account %}">
+                        <i class="tim-icons icon-chart-pie-36"></i>
+                        <p>My Trades</p>
+                    </a>
+                </li>
+                <li class="{% if 'icons' in segment %} active {% endif %}">
+                    <a href="{% url 'crypto' symbol=symbol account=account %}">
+                        <i class="tim-icons icon-credit-card"></i>
+                        <p>Margin Trading</p>
+                    </a>
+                </li>
+                <li class="{% if 'map' in segment %} active {% endif %}">
+                    <a href="{% url 'options' symbol=symbol account=account %}">
+                        <i class="tim-icons icon-wallet-43"></i>
+                        <p>Option Trading</p>
+                    </a>
+                </li>
+                <li class="{% if 'notifications' in segment %} active {% endif %}">
+                    <a href="{% url 'contest' account=account %}">
+                        <i class="tim-icons icon-single-02"></i>
+                        <p>Trading Contest</p>
+                    </a>
+                </li>
+                <li class="{% if 'user' in segment %} active {% endif %}">
+                    <a href="#">
+                        <i class="tim-icons icon-bell-55"></i>
+                        <p>Market Analysis</p>
+                    </a>
+                </li>
+                <li class="{% if 'tables' in segment %} active {% endif %}">
+                    <a href="{% url 'dashboard' account=account %}">
+                        <i class="tim-icons icon-chart-bar-32"></i>
+                        <p>Trading Stats</p>
+                    </a>
+                </li>
+                <li class="{% if 'typography' in segment %} active {% endif %}">
+                    <a href="https://www.metaspaceai.app/explore">
+                        <i class="tim-icons icon-chart-bar-32"></i>
+                        <p>NFT Trading</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'support' %}">
+                        <i class="tim-icons icon-chat-33"></i>
+                        <p>Support</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <i class="tim-icons icon-button-power"></i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+        <div class="main-panel flex">
+              <!-- Navbar -->
+              <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-toggle d-inline">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700" href="{% url 'home' %}" target="_blank">
+                          <img src="/static/img/logo.png" class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8" alt="main_logo" />
+                          <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"></span>
+                        </a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="input-group d-flex align-items-center mb-0">
+                                <label class="switch theme-switch">
+                                    <input type="checkbox" class="bsc" checked="">
+                                    <span class="slider"></span>
+                                </label>
+                            </li>
+                            <li class="search-bar input-group">
+                                <button class="btn btn-link" id="search-button" data-toggle="modal"
+                                        data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
+                                    <span class="d-lg-none d-md-block">Search</span>
+                                </button>
+                            </li>
+                            <li >
+                              <a href="{% url 'wallet' %}">
+                              <div class="col-md" >
+                                <button class="connect-button">
+                                  <i class="tim-icons icon-wallet-43"></i>
+                                   Wallet 
+                                   <h5>{{account_id}}</h5>
+                                </button>
+                                
+                              </div>
+                              </a>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <div class="notification d-none d-lg-block d-xl-block"></div>
+                                    <i class="tim-icons icon-sound-wave"></i>
+                                    <p class="d-lg-none">
+                                        Notifications
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                                    <li class="nav-link"><a href="#" class="nav-item dropdown-item">Mike John responded to
+                                        your email</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">You
+                                        have 5 more tasks</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Your
+                                        friend Michael is in town</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
+                                        notification</a></li>
+                                    <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
+                                        one</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <div class="photo">
+                                        <img src="/static/dashboard/assets/img/anime3.png" alt="Profile Photo">
+                                    </div>
+                                    <b class="caret d-none d-lg-block d-xl-block"></b>
+                                    <p class="d-lg-none">
+                                        Log out
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li class="nav-link">
+                                        <a href="{% url 'trader_profile' account=account %}" class="nav-item dropdown-item">Profile</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li class="nav-link">
+                                        <a href="{% url 'logout' %}" 
+                                          class="nav-item dropdown-item">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="separator d-lg-none"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Navbar -->
+      
+
+            {% block content %}
+
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-chart" >
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="col-sm-6 text-left" id="symbol_dropdowns">
+                                            <h5 class="card-category">Symbols</h5>
+                                            <h2 class="card-title">
+                                              {{symbol}}
+                                              <i class="tim-icons icon-minimal-down"></i>
+                                              
+                                            </h2>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                              {% if account == 'DEMO' %}
+                                                <label class="btn btn-sm btn-primary btn-simple active" id="demo-radio">
+                                              {% else %}
+                                                <label class="btn btn-sm btn-primary btn-simple" id="demo-radio">
+                                              {% endif %}
+                                                    <input type="radio" name="options" >
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Demo</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-single-02"></i>
+                                                    </span>
+                                                </label>
+                                                {% if account == 'LIVE' %}
+                                                <label class="btn btn-sm btn-primary btn-simple active" id="real-radio">
+                                                {% else %}
+                                                <label class="btn btn-sm btn-primary btn-simple" id="real-radio">
+                                                {% endif %}
+                                                    <input type="radio" class="d-none d-sm-none" name="options" >
+                                                  
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Real</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-gift-2"></i>
+                                                    </span>
+                                                </label>
+                                                {% if account == 'WALLET' %}
+                                                <label class="btn btn-sm btn-primary btn-simple active" id="wallet-radio">
+                                                {% else %}
+                                                <label class="btn btn-sm btn-primary btn-simple" id="wallet-radio">
+                                                {% endif %}
+                                                    <input type="radio" class="d-none" name="options">
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Wallet</span>
+                                                    <span class="d-block d-sm-none">
+                                                        <i class="tim-icons icon-tap-02"></i>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" style="margin-left: 50%; margin-top: -25px;">
+                                  <div class="btn-group btn-group-toggle float-right d-flex" data-toggle="buttons">
+                                      <label class="btn btn-sm btn-primary btn-simple" id="wallet-radio">
+                                          <input type="radio" class="d-none" name="options">
+                                          <span class="d-flex align-items-center">
+                                              <h4 style="color: rgb(1, 153, 1); margin-right: 5px;margin-bottom: -5px;">$</h4>
+                                              <h4 id="account-balance" style="color: rgb(1, 153, 1); margin-bottom: -5px;">{{demo_account_balance}}</h4>
+                                          </span>
+                                          <span class="d-block d-sm-none">
+                                              <i class="tim-icons icon-tap-02"></i>
+                                          </span>
+                                      </label>
+                                  </div>
+                                </div>
+                              
+                                <div class="card-body">
+                                    <div class="chart-area" style="height: 75vh;">
+                                      <div id="chart" style="height:100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            {% endblock content %}
+
+            <div class="sidebar float-right"  style="margin-left: 83%; width: 200px;">
+              <div class="sidebar-wrapper">
+                <div class="scrollable-container">
+                  <div class="btn-group btn-group-toggle float-right" data-toggle="buttons" style="width: 97%;">
+                    <label style="color: white;" class="btn btn-sm btn-primary btn-simple active" id="open-button"  >
+                      <input type="radio" name="options"  checked>
+                      <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Opened</span>
+                      <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-single-02"></i>
+                      </span>
+                    </label>
+                    <label style="color: white;" class="btn btn-sm btn-primary btn-simple" id="closed-button">
+                      <input type="radio" class="d-none d-sm-none" name="options"  >
+                      <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Closed</span>
+                      <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-gift-2"></i>
+                      </span>
+                    </label>
+                  </div>
+              
+                  <ul class="nav" id="open-trades">  
+                    <li class="{% if 'tables' in segment %} active {% endif %}" id="trade-list" >
+                      <div class="table-responsive" style="display: none;">
+                        <table class="table tablesorter " id="">
+                          <thead class=" text-primary">
+                            <tr>
+                              <th>
+                                  Symbol
+                              </th>
+                              <th>
+                                  Asset Type
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                Dakota Rice
+                              </td>
+                              <td>
+                                Niger
+                              </td>   
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      {% for trade in trades %}
+                      <div class="table-responsive">
+                        <table class="table tablesorter">
+                          <thead class=" text-primary">
+                            <tr>
+                              <th>
+                                  {{trade.symbol}}
+                              </th>
+                              <th>
+                                  {{trade.option_type}}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                  ${{trade.stake}}
+                              </td>
+                              <td>
+                                  {{trade.countdown | slice:":7" }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>  
+                  <ul class="nav" id="closed-trades" style="display:none;">      
+                    {% for closed_trade in closed_trades %}
+                    <li class="{% if 'tables' in segment %} active {% endif %}">
+                      <div class="table-responsive">
+                        <table class="table tablesorter " id="">
+                          <thead class=" text-primary">
+                            <tr>
+                              <th> 
+                                  {{closed_trade.symbol}}
+                              </th>
+                              <th>
+                                {{closed_trade.option_type}}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                {{closed_trade.stake}}
+                              </td>
+                              <td>
+                                {{closed_trade.outcome}}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="col-md" style="width: 100%; margin-top: 10%;">
+                  <a href="{% url 'all_trades' account=account %}">
+                  <button id="tradeBtn" type="submit" class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','left')">All Trades</button>
+                  </a>
+                </div>
+                <div class="optionform mx-3" >
+                  <div class="after:opacity-65 after:bg-gradient-to-tl after:from-slate-600 after:to-slate-300 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']" sidenav-card>
+                    <div style="background: radial-gradient(ellipse at center, #c686f3, #7a8df7);" class="relative z-20 flex-auto w-full p-4 text-left text-white">
+                      <form id="trade-form" method="post" action="{% url 'place_option_trade' option_type='CALL' account=account %}">
+                        {% csrf_token %}
+                        <div class="inputs">
+                        {% if 'pair' in request.resolver_match.url_name %}
+                        <div class="input-group" style="display: none;">
+                          <label for="symbol">Symbol:</label>
+                          <input type="text" id="symbol" name="symbol" value="{{currency_pair}}">
+                          </div>
+                          {% else %}
+                          <div class="input-group" style="display: none;">
+                          <label for="symbol">Symbol:</label>
+                          <input type="text" id="symbol" name="symbol" value="{{symbol}}">
+                        </div>
+                        {% endif %}
+                        {% if 'DEMO' in request.resolver_match.url_name %}
+                        <div class="input-group" style="display: none;">
+                          <label for="account">Account:</label>
+                          <input type="text" id="account" name="account" value="DEMO">
+                          </div>
+                          {% else %}
+                          <div class="input-group" style="display: none;">
+                          <label for="account">Symbol:</label>
+                          <input type="text" id="account" name="account" value="LIVE">
+                        </div>
+                        {% endif %}
+          
+                        <div class="input-group">
+                          <label for="stake">Stake:</label>
+                          <input style="color: black; width: 130px;" type="number" id="stake" name="stake" placeholder="Enter Stake" required>
+                        </div>
+                        <div  class="input-group">
+              
+                          <label for="expiration">Expiration:</label>
+                          
+                          <select style="color: black;" id="expiration" name="expiration">
+                            <option value="1">1 minute</option>
+                            <option value="2">2 minutes</option> 
+                            <option value="5">5 minutes</option>
+                            <option value="15">15 minutes</option>
+                            <option value="30">30 minutes</option>
+                          </select>
+                          </div>
+                        </div>
+                          
+                      <div class="transition-all duration-200 ease-nav-brand">
+                        <div class="buttons flex flex-col" onclick="demo.showNotification('bottom','right')">
+                          <div class="buttons flex flex-col" style="width: 140px;" >
+                          <button style="background: linear-gradient(45deg, #00740f, #01bd2a 50px);"  type="button" target="_blank" class="buy-button btn btn-primary btn-block">CALL
+                            <svg style="margin-left: 5px;" width="20" height="20" fill="white" viewBox="0 0 20 20">
+                              <path d="M2 12l8-4 8 4M2 8l8-4 8 4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                          </button>
+                          </div>
+                          <h3>99%</h3>  
+                          <div class="buttons flex flex-col" style="width: 140px;">
+                            <button style="background: linear-gradient(45deg, #ff0000, #f64747 50px);" type="button" target="_blank" class="sell-button btn btn-primary btn-block" target="_blank">PUT   
+                              <svg style="margin-left: 11px;" width="20" height="20" fill="white" viewBox="0 0 20 20">
+                                <path d="M2 8l8 4 8-4M2 12l8 4 8-4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+             
+            {% include 'dashboard/includes/footer.html' %}
+            <!-- sidenav  -->
+    
+
+        </div>
+        
+
+        
+          
+        </div>  
+        <div class="col-md-6" id="level_div">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Crypto pairs </h4>
+            </div>
+            <div class="card-body ">
+              <div class="table-full-width table-responsive">
+                  <table class="table">
+                      <tbody>
+                        {%for pair in pairs %}
+                        <tr>
+                          <td>
+                            <label class="form-check-label">
+                              <a href="{% url 'options' symbol=pair.symbol account=account %}">
+                              <img style="height: 50px;" src="/static/assets/img/pairs/{{ pair.image }}" alt="Beginner" class="form-check-img">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                              </a>
+                            </label>
+                          </td>
+                        
+                          <td>
+                            <p class="title">{{pair}}</p>
+                            <p class="text-muted">{{price}}</p>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>  
+                  </table>
+              </div>
+          </div>
+
+    {% include 'dashboard/includes/fixed-plugin.html' %}
+
+    {% include 'dashboard/includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
+
+        });
+        // Get references to both elements
+        const symbolDiv = document.getElementById('symbol_dropdowns');
+        const levelDiv = document.getElementById('level_div');
+        
+        // Variable to track visibility state
+        let isLevelDivVisible = false;
+
+        // Function to toggle visibility
+        function toggleLevelDiv() {
+          if (isLevelDivVisible) {
+            levelDiv.style.display = 'none';
+          } else {
+            levelDiv.style.display = 'block';
+          }
+          
+          // Toggle the state
+          isLevelDivVisible = !isLevelDivVisible;
+        }
+
+        // Show/hide levelDiv on click
+        symbolDiv.addEventListener('click', toggleLevelDiv);
+        
+        // Get radio buttons
+        const demoRadio = document.getElementById('demo-radio');
+        const realRadio = document.getElementById('real-radio');
+        const walletRadio = document.getElementById('wallet-radio');
+        // Handle click events  
+        demoRadio.addEventListener('click', () => {
+          window.location.href = "{% url 'options' symbol=symbol account='DEMO' %}"; 
+        });
+
+        realRadio.addEventListener('click', () => {
+          window.location.href = "{% url 'options' symbol=symbol account='LIVE' %}";
+        });
+
+        walletRadio.addEventListener('click', () => {
+          window.location.href = "{% url 'options' symbol=symbol account='WALLET' %}";
+        });
+    </script>
+
+    <script>
+      // Selectors
+      const form = $('#trade-form');
+      const buyBtn = $('.buy-button'); 
+      const sellBtn = $('.sell-button');
+  
+      const csrfToken = jQuery("[name=csrfmiddlewaretoken]").val();
+      // Target price to draw line at
+  
+      const targetPrice = 520;
+      const chartData = {{ chart_data|safe }}; 
+      let strikePrice = chartData[chartData.length - 1].value;
+      let strikeTime = chartData[chartData.length - 1].time;
+      const Markers = [];
+      const expiryTime = "2118-12-29";
+  
+      // Define the tickFormatter function
+      const tickMarkFormatter = (unix) => {
+        const date = new Date(unix * 1000);
+        return date.getHours() + ':00';
+      };
+      
+      const formatters = {
+        Dollar: function(price) { return '' + price.toFixed(4); },
+        Pound: function(price) { return '\u00A3' + price.toFixed(4); },
+      };
+      
+      const formatterNames = Object.keys(formatters);
+  
+        document.addEventListener('DOMContentLoaded', function() {
+  
+          const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+             
+              autosize: true,
+              layout: {
+                backgroundColor: '#040426', // Dark blue background color for the chart area
+              },
+              timeScale: {
+                timeVisible: true,
+                secondsVisible: false,
+                ticksVisible: true, // Show ticks
+                rightOffset: 75, // Optional: Adjust the offset for better visibility
+                setTimeUnit: 1,
+                setTickMarkFormatter: tickMarkFormatter, // Use the tickFormatter function
+              },
+              rightPriceScale: {
+                priceFormatter: formatters,
+                scaleMargins: {
+                  top: 0.4, // leave some space for the legend
+                  bottom: 0.15,
+                },
+              },
+              crosshair: {
+                mode: LightweightCharts.CrosshairMode.Normal,
+                // hide the horizontal crosshair line
+                horzLine: {
+                  visible: false,
+                  labelVisible: false,
+                },
+              },
+              localization: {
+                priceFormatter: formatters[formatterNames[0]],
+              },
+        });
+        // Dark theme options
+        const darkTheme = {
+          chart: {
+            layout: {
+              background: {
+                type: 'solid',
+                color: '#2B2B43',
+              },
+              lineColor: '#2B2B43',
+              textColor: '#D9D9D9',
+            },
+            watermark: {
+              color: 'rgba(0, 0, 0, 0)',
+            },
+            crosshair: {
+              color: '#758696',
+            },
+            grid: {
+              vertLines: {
+                color: '#2B2B43',
+              },
+              horzLines: {
+                color: '#363C4E',
+              },
+            },
+          },
+          series: {
+              topColor: 'rgba(32, 226, 47, 0.56)',
+              bottomColor: 'rgba(32, 226, 47, 0.04)',
+              lineColor: 'rgba(32, 226, 47, 1)',
+          },
+        };
+  
+    
+        
+        chart.applyOptions({
+          priceScale: {
+            priceFormat: {
+            type: 'value',
+            precision: 4,
+            }
+          }
+        });
+  
+        const lineSeries = chart.addLineSeries();
+        lineSeries.setData(chartData);
+  
+            // Add an area series to the chart
+        const areaSeries = chart.addAreaSeries({
+          topColor: 'rgba(33, 150, 243, 0.56)',
+          bottomColor: 'rgba(33, 150, 243, 0.04)',
+          lineColor: 'rgba(33, 150, 243, 1)',
+          lineWidth: 3,
+        });
+        areaSeries.setData(chartData);
+        
+        // Apply dark theme to chart 
+        chart.applyOptions(darkTheme.chart);
+    
+        // Draw strike line
+        function drawStrikeLine(price) {
+  
+          // Create line series
+          const targetLine = chart.addLineSeries({
+            color: 'lime',
+            lineWidth: 2,
+            lineStyle: LightweightCharts.LineStyle.Dashed,
+            price: price,
+          });
+  
+          // Set data points
+          targetLine.setData([
+            {time: chartData[0].time, value: price},
+            {time: chartData[chartData.length-1].time, value: price}
+          ]);
+        }
+        // Draw strike line
+        function drawTargetLine(price) {
+  
+          // Create line series
+          const targetLine = chart.addLineSeries({
+            color: 'red',
+            lineWidth: 2,
+            lineStyle: LightweightCharts.LineStyle.Dashed,
+            price: price,
+          });
+
+          // Set data points
+          targetLine.setData([
+            {time: chartData[0].time, value: price},
+            {time: chartData[chartData.length-1].time, value: price}
+          ]);
+        }
+        // Draw vertical line
+        function drawVerticalLine(time) {
+        const lineSeries = chart.addLineSeries({
+          color: 'blue',
+          lineWidth: 1,
+          lineStyle: LightweightCharts.LineStyle.Dashed,
+          title: 'Vertical Line'
+        });
+  
+        lineSeries.setData([
+          { time: time, value: 0 },
+          { time: time, value: 100 } // Adjust the value range as needed
+        ]);
+        }
+  
+        // Handle form submit
+        buyBtn.click(function(e) {
+  
+          e.preventDefault();
+
+          // Set form action
+          form.attr('action', '{% url "place_option_trade" option_type="CALL" account=account %}');
+
+          // Get form data
+          const data = {
+            symbol: form.find('#symbol').val(),
+            stake: form.find('#stake').val(),
+            expiration: form.find('#expiration').val(),
+            option_type: 'CALL'
+          };
+          
+  
+          // AJAX request
+          $.ajax({
+            {% with account=account %}
+            url: "{% url 'place_option_trade' option_type='CALL' account=account %}",
+            {% endwith %}
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': csrfToken  // Set the CSRF token in the request headers
+            },
+            data: data,
+            success: function(res) {
+  
+              Markers.push ({
+                time: strikeTime,
+                position: 'belowBar',
+                color: 'lime',
+                shape: 'arrowUp',
+                text: 'Call' 
+              })
+  
+              lineSeries.setMarkers(Markers);
+              drawStrikeLine(strikePrice, chart);
+              // After performing the buy action, update the trade list and balance
+              updateTradeListAndBalance();
+            }
+          });
+        });
+  
+        // Sell button handler
+        sellBtn.click(function(e) {
+  
+          e.preventDefault();
+          // Set form action
+          form.attr('action', '{% url "place_option_trade" option_type="PUT" account=account %}');
+
+          // Get form data
+          const data = {
+            symbol: form.find('#symbol').val(),
+            stake: form.find('#stake').val(),
+            expiration: form.find('#expiration').val(),
+            option_type: 'PUT'
+          };
+          
+          // AJAX request
+          $.ajax({
+            url: "{% url 'place_option_trade' option_type='PUT' account=account %}",
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': csrfToken  // Set the CSRF token in the request headers
+            },
+            data: data,
+            success: function(res) {
+              
+              Markers.push ({
+                time: strikeTime,
+                position: 'aboveBar',
+                color: 'red',
+                shape: 'arrowDown',
+                text: 'Put'
+              });
+  
+              lineSeries.setMarkers(Markers);
+              drawTargetLine(strikePrice, chart);
+              // After performing the buy action, update the trade list and balance
+              updateTradeListAndBalance();
+            }
+          });
+        });
+            // Function to fetch and update chart data
+            function fetchAndUpdateChartData() {
+                {% with symbol=symbol %} 
+  
+                fetch("{% url 'get_crypto_chart_data' symbol=symbol %}")
+  
+                {% endwith %}
+                    .then(response => response.json())
+                    .then(transformed_data => {
+                        // console.log("New point received:", newPoint);
+  
+                        // console.log("Updated chart data:", chartData);
+                        // Update the strike price with the latest value
+                        strikePrice = transformed_data[chartData.length - 1].value;
+                        strikeTime = transformed_data[chartData.length - 1].time;
+  
+                        // Update the chart data and redraw
+                        lineSeries.applyOptions({
+                            timeVisible: true,
+                            secondsVisible: true
+                        });
+                        lineSeries.setData(transformed_data);
+                        areaSeries.setData(transformed_data);
+                    })
+                    .catch(error => console.error("Error fetching and updating chart data:", error));
+            }
+        // Function to update the trade list and demo account balance
+        function updateTradeListAndBalance() {
+          $.ajax({
+            {% with account=account %}
+            url: "{% url 'update_new_data' account=account %}",
+            {% endwith %}
+            success: function (data) {
+              // Debugging: Print the data received from the server
+              console.log('Data received:', data);
+  
+              // Update balance
+              $('#account-balance').text(data.demo_account_balance);
+  
+              // Clear existing trades
+              $('#trade-list').empty();
+  
+              data.trades.forEach(function (trade) {
+                console.log('Trade Data:', trade);
+                // Access and print the symbol
+                console.log('Trade Symbol:', trade.fields.symbol);
+  
+                const row = `
+                  
+                    <table class="table tablesorter ">
+                        <thead class=" text-primary">
+                        <tr>
+                            <th>
+                              ${trade.fields.symbol}
+                            </th>
+                            <th>
+                              ${trade.fields.option_type}
+                            </th>
+            
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                              $ ${trade.fields.stake}
+                            </td>
+                            <td>
+                              ${formatCountdown(trade.fields.countdown)}
+                            </td>
+                            
+                        </tr>
+                        </tbody>
+                    </table>
+                
+              
+              
+  
+              `;
+                $('#trade-list').append(row);
+              });
+              function formatCountdown(countdown) {
+                  // Extract the first 8 characters to display only the minutes and seconds
+                  return countdown.substring(0, 7);
+              }
+  
+              // Debugging: Print the updated trades
+              console.log('Updated trades:', $('#trade-list').html());
+            },
+            error: function (error) {
+              // Debugging: Print any errors
+              console.error('Error:', error);
+            },
+          });
+        }
+  
+        
+        // Function to update the countdown timer
+        function updateCountdownTimer(expirationTime) {
+            const countdownTimer = document.getElementById('countdown-timer');
+            const currentTime = new Date().getTime();
+            const timeRemaining = expirationTime - currentTime;
+  
+            // Check if the timer has reached zero
+            if (timeRemaining <= 0) {
+                // Trigger the AJAX request to update the trade icon and outcomes
+                $.ajax({
+                    url: '/update_trade_outcomes/',
+                    method: 'GET',  // Use GET or POST as appropriate
+                    success: function(res) {
+                        // Handle the response if needed
+                        console.log('Trade outcomes updated:', res);
+                    }
+                });
+  
+                // Hide the timer when it reaches zero
+                countdownTimer.style.display = 'none';
+            } else {
+                // Calculate minutes and seconds remaining
+                const minutes = Math.floor((timeRemaining % (20 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);	
+  
+                // Update the timer element
+                countdownTimer.innerHTML = `Time Remaining: ${minutes}m ${seconds}s`;
+            }
+        }
+        // Get the expiration time from your form or wherever it's available
+        const expirationTime = new Date(expiryTime).getTime();
+      
+        // Update the countdown timer every second (1000 milliseconds)
+        setInterval(function() {
+            updateTradeListAndBalance();
+        }, 1000);
+            // Update chart data every 5 seconds
+            setInterval(fetchAndUpdateChartData, 3000); // Refresh every 2 seconds
+        });
+    </script>
+    <!--====== Javascripts & Jquery ======-->
+    <script>
+      const openButton = document.getElementById('open-button');
+      const closedButton = document.getElementById('closed-button');
+
+      // Get trades elements
+      const openTrades = document.getElementById('open-trades');
+      const closedTrades = document.getElementById('closed-trades');
+
+      openButton.addEventListener('click', () => {
+        openTrades.style.display = 'block';
+        closedTrades.style.display = 'none';
+      })
+
+      closedButton.addEventListener('click', () => {
+        openTrades.style.display = 'none';
+        closedTrades.style.display = 'block';
+      })
+    </script>
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://www.tradingview.com/static/lightweight-charts.standalone.production.js"></script>
+    {% endblock javascripts %}
+
+</body>
+</html>

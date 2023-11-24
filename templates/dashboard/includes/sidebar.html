@@ -1,0 +1,72 @@
+
+    <div class="sidebar" >
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+      -->
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="javascript:void(0)" class="simple-text logo-mini">
+                    CT
+                </a>
+                <a href="javascript:void(0)" class="simple-text logo-normal">
+                    Creative Tim
+                </a>
+            </div>
+            <ul class="nav">
+                <li class="{% if 'index' in segment %} active {% endif %} ">
+                    <a href="{% url 'dashboard' account=account %}">
+                        <i class="tim-icons icon-chart-pie-36"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="{% if 'icons' in segment %} active {% endif %}">
+                    <a href="{% url 'add_funds' account=account %}">
+                        <i class="tim-icons icon-credit-card"></i>
+                        <p>Deposit Funds</p>
+                    </a>
+                </li>
+                <li class="{% if 'map' in segment %} active {% endif %}">
+                    <a href="{% url 'withdraw_funds' account=account %}">
+                        <i class="tim-icons icon-wallet-43"></i>
+                        <p>Withdraw Funds</p>
+                    </a>
+                </li>
+                <li class="{% if 'notifications' in segment %} active {% endif %}">
+                    <a href="{% url 'trader_profile' account=account %}">
+                        <i class="tim-icons icon-single-02"></i>
+                        <p>Trader Profile</p>
+                    </a>
+                </li>
+                <li class="{% if 'user' in segment %} active {% endif %}">
+                    <a href="{% url 'notification' account=account %}">
+                        <i class="tim-icons icon-bell-55"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+                <li class="{% if 'tables' in segment %} active {% endif %}">
+                    <a href="{% url 'contest' account='LIVE' %}">
+                        <i class="tim-icons icon-chart-bar-32"></i>
+                        <p>Trading Contest</p>
+                    </a>
+                </li>
+                <li class="{% if 'typography' in segment %} active {% endif %}">
+                    <a href="#">
+                        <i class="tim-icons icon-chart-bar-32"></i>
+                        <p>News</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'support' %}">
+                        <i class="tim-icons icon-chat-33"></i>
+                        <p>RTL Support</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <i class="tim-icons icon-button-power"></i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
